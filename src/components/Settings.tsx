@@ -1,33 +1,10 @@
-import { ArrowLeft, Sun, Moon, Monitor, Check } from 'lucide-react';
+import { ArrowLeft, Moon, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface SettingsProps {
   onBack: () => void;
-  themeSetting: 'system' | 'light' | 'dark';
-  onThemeChange: (theme: 'system' | 'light' | 'dark') => void;
 }
 
-export default function Settings({ onBack, themeSetting, onThemeChange }: SettingsProps) {
-  const themes = [
-    {
-      id: 'system' as const,
-      name: 'Automatique (Système)',
-      description: 'S\'adapte aux préférences de votre appareil',
-      icon: Monitor,
-    },
-    {
-      id: 'light' as const,
-      name: 'Mode Clair',
-      description: 'Thème lumineux et épuré',
-      icon: Sun,
-    },
-    {
-      id: 'dark' as const,
-      name: 'Mode Sombre',
-      description: 'Thème sombre classique Hot Money',
-      icon: Moon,
-    },
-  ];
-
+export default function Settings({ onBack }: SettingsProps) {
   return (
     <div className="flex-1 overflow-y-auto px-4 py-6 md:px-8 max-w-4xl mx-auto w-full space-y-6 select-none">
       {/* Back Header */}
@@ -50,52 +27,40 @@ export default function Settings({ onBack, themeSetting, onThemeChange }: Settin
         
         <div className="space-y-4">
           <div>
-            <h2 className="text-sm md:text-base font-semibold text-white font-display mb-1">
+            <h2 className="text-sm md:text-base font-semibold text-white font-display mb-1 flex items-center gap-2">
+              <Moon size={18} className="text-[#8a87ff]" />
               Thème de l'application
             </h2>
             <p className="text-xs text-gray-400">
-              Choisissez comment Hot Money s'affiche sur votre appareil. L'option automatique synchronise l'application avec le système.
+              Hot Money s'affiche exclusivement en Mode Sombre (Dark Mode) de manière permanente.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 pt-2">
-            {themes.map((theme) => {
-              const Icon = theme.icon;
-              const isSelected = themeSetting === theme.id;
-              return (
-                <button
-                  key={theme.id}
-                  onClick={() => onThemeChange(theme.id)}
-                  className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all text-left cursor-pointer ${
-                    isSelected
-                      ? 'bg-[#5e5bf0]/10 border-[#5e5bf0] text-white shadow-[0_4px_20px_rgba(94,91,240,0.15)]'
-                      : 'bg-[#111126] border-[#1f1f3d] text-gray-300 hover:border-[#1f1f3d]/80 hover:bg-[#1f1f3d]/20'
-                  }`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`p-2.5 rounded-lg ${
-                      isSelected ? 'bg-[#5e5bf0] text-white' : 'bg-[#1c1c3c] text-gray-400'
-                    }`}>
-                      <Icon size={18} />
-                    </div>
-                    <div>
-                      <span className="block text-sm font-semibold">
-                        {theme.name}
-                      </span>
-                      <span className="block text-xs text-gray-400 mt-0.5">
-                        {theme.description}
-                      </span>
-                    </div>
-                  </div>
-
-                  {isSelected && (
-                    <div className="w-5 h-5 rounded-full bg-[#5e5bf0] flex items-center justify-center text-white shrink-0">
-                      <Check size={12} strokeWidth={3} />
-                    </div>
-                  )}
-                </button>
-              );
-            })}
+          <div className="p-4 bg-[#1c1c3c]/50 border border-[#1f1f3d]/80 rounded-xl space-y-2.5">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-[#5e5bf0]/15 text-[#8a87ff] rounded-lg">
+                <Moon size={16} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">Mode Sombre Activé</p>
+                <p className="text-xs text-gray-400">Le thème sombre est optimisé pour votre confort visuel.</p>
+              </div>
+            </div>
+            <div className="h-[1px] bg-[#1f1f3d]/60" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div className="flex items-start gap-2.5">
+                <ShieldCheck size={14} className="text-emerald-400 mt-0.5 shrink-0" />
+                <p className="text-[11px] text-gray-400">
+                  <strong className="text-gray-300">Moins de fatigue oculaire :</strong> Idéal pour les longues sessions d'activités et de tâches rémunérées.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <Sparkles size={14} className="text-[#8a87ff] mt-0.5 shrink-0" />
+                <p className="text-[11px] text-gray-400">
+                  <strong className="text-gray-300">Économie d'énergie :</strong> Consomme moins de batterie sur les écrans OLED et AMOLED.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

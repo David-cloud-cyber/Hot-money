@@ -26,7 +26,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('accueil');
   const [showConditions, setShowConditions] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [themeSetting, setThemeSetting] = useState<'system' | 'light' | 'dark'>('system');
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [user, setUser] = useState<User>({
     name: '',
@@ -69,57 +68,12 @@ export default function App() {
     };
   }, []);
 
-  // Load theme setting from localStorage on mount
+  // Force dark mode unconditionally on mount
   useEffect(() => {
-    const savedTheme = localStorage.getItem('hot_money_theme') as 'system' | 'light' | 'dark' | null;
-    if (savedTheme) {
-      setThemeSetting(savedTheme);
-    }
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+    localStorage.setItem('hot_money_theme', 'dark');
   }, []);
-
-  // Update document theme classes dynamically based on theme preference
-  useEffect(() => {
-    const updateTheme = () => {
-      let resolvedTheme: 'light' | 'dark' = 'dark';
-      if (themeSetting === 'system') {
-        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        resolvedTheme = isSystemDark ? 'dark' : 'light';
-      } else {
-        resolvedTheme = themeSetting;
-      }
-
-      if (resolvedTheme === 'light') {
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark');
-        document.documentElement.classList.remove('light');
-      }
-    };
-
-    updateTheme();
-
-    if (themeSetting === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const listener = (e: MediaQueryListEvent) => {
-        const resolved = e.matches ? 'dark' : 'light';
-        if (resolved === 'light') {
-          document.documentElement.classList.add('light');
-          document.documentElement.classList.remove('dark');
-        } else {
-          document.documentElement.classList.add('dark');
-          document.documentElement.classList.remove('light');
-        }
-      };
-      mediaQuery.addEventListener('change', listener);
-      return () => mediaQuery.removeEventListener('change', listener);
-    }
-  }, [themeSetting]);
-
-  const handleThemeChange = (newTheme: 'system' | 'light' | 'dark') => {
-    setThemeSetting(newTheme);
-    localStorage.setItem('hot_money_theme', newTheme);
-  };
 
   const handleAuthSuccess = (userData: { name: string; email: string; referralCodeEntered: string }) => {
     const newUserState: User = {
@@ -220,8 +174,6 @@ export default function App() {
           ) : showSettings ? (
             <Settings 
               onBack={() => setShowSettings(false)}
-              themeSetting={themeSetting}
-              onThemeChange={handleThemeChange}
             />
           ) : (
             <>

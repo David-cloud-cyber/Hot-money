@@ -225,7 +225,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
         <div className="flex items-center gap-2">
           <ImageIcon size={18} className="text-[#8a87ff]" />
           <h2 className="text-sm md:text-base font-semibold text-white font-display">
-            Affiche promotionnelle de partage (Anglais)
+            Affiche promotionnelle de partage
           </h2>
         </div>
         <p className="text-xs text-gray-400 font-light">

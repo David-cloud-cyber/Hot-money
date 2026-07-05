@@ -64,6 +64,9 @@ function generateReferralCode(): string {
 async function startServer() {
   const app = express();
 
+  // Enable trust proxy so req.secure and x-forwarded-proto work correctly behind reverse proxies (like Cloud Run or Nginx)
+  app.set('trust proxy', true);
+
   // Middleware for JSON parsing
   app.use(express.json());
 
@@ -246,8 +249,12 @@ async function startServer() {
         if (fs.existsSync(indexPath)) {
           let html = fs.readFileSync(indexPath, 'utf-8');
           
-          const host = req.get('host') || 'www.hotmoney.fun';
-          const protocol = req.headers['x-forwarded-proto'] === 'https' || req.secure ? 'https' : 'http';
+          let host = req.get('host') || 'www.hotmoney.fun';
+          // Ensure we don't use internal or development hosts for the absolute OG URLs when shared
+          if (host.includes('localhost') || host.includes('127.0.0.1') || host.includes('3000')) {
+            host = 'www.hotmoney.fun';
+          }
+          const protocol = req.headers['x-forwarded-proto'] === 'http' ? 'http' : 'https';
           const absoluteUrl = `${protocol}://${host}${req.originalUrl}`;
           const absoluteImageUrl = `${protocol}://${host}/og_image_share.jpg`;
           

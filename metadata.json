@@ -1,6 +1,6 @@
 {
   "name": "Hot Money",
-  "description": "Une application de gains en ligne moderne où vous pouvez gagner de l'argent en parrainant des amis et en effectuant des tâches simples.",
+  "description": "La meilleure plateforme pour gagner de l'argent en ligne. Gagnez de 200 à 500 F CFA par tâche selon votre niveau d'activité. Inscription gratuite – aucun frais à payer !",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

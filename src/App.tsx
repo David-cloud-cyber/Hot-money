@@ -9,6 +9,8 @@ import Inviter from './components/Inviter';
 import Retrait from './components/Retrait';
 import Conditions from './components/Conditions';
 import Settings from './components/Settings';
+import { WifiOff } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 function generateReferralCode(): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -25,6 +27,7 @@ export default function App() {
   const [showConditions, setShowConditions] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [themeSetting, setThemeSetting] = useState<'system' | 'light' | 'dark'>('system');
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [user, setUser] = useState<User>({
     name: '',
     email: '',
@@ -50,6 +53,20 @@ export default function App() {
         console.error('Failed to parse saved user', e);
       }
     }
+  }, []);
+
+  // Monitor online/offline status
+  useEffect(() => {
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
   // Load theme setting from localStorage on mount
@@ -140,61 +157,100 @@ export default function App() {
 
   // If not logged in, render Auth flow (Screen #1)
   if (!isLoggedIn) {
-    return <Auth onAuthSuccess={handleAuthSuccess} />;
+    return (
+      <div className="flex flex-col min-h-screen w-full">
+        <AnimatePresence>
+          {isOffline && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="bg-amber-600 text-white text-xs md:text-sm font-medium py-2.5 px-4 flex items-center justify-center gap-2 relative z-[200] shadow-md select-none text-center shrink-0"
+            >
+              <WifiOff size={15} className="shrink-0 animate-pulse text-amber-100" />
+              <span>
+                <strong>Mode hors-ligne activé.</strong> Vos données de gains locales sont conservées, mais la connexion est requise pour créer un compte ou vous connecter.
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div className="flex-1 flex flex-col">
+          <Auth onAuthSuccess={handleAuthSuccess} />
+        </div>
+      </div>
+    );
   }
 
   // Render main layout (Screens #2 to #7)
   return (
-    <div className="min-h-screen bg-radial from-[#151532] via-[#090915] to-[#04040a] text-gray-100 flex flex-col md:flex-row relative overflow-hidden">
-      {/* Decorative ambient glowing background blobs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#5e5bf0]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[#a855f7]/5 rounded-full blur-[120px] pointer-events-none" />
-
-      {/* Sidebar Navigation */}
-      <Sidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onLogout={handleLogout}
-        userName={user.name}
-      />
-
-      {/* Main Tab Content Viewport */}
-      <main className="flex-1 flex flex-col relative z-10 pt-16 md:pt-0 pb-6">
-        {showConditions ? (
-          <Conditions onBack={() => setShowConditions(false)} />
-        ) : showSettings ? (
-          <Settings 
-            onBack={() => setShowSettings(false)}
-            themeSetting={themeSetting}
-            onThemeChange={handleThemeChange}
-          />
-        ) : (
-          <>
-            {activeTab === 'accueil' && (
-              <Accueil 
-                user={user} 
-                setUser={setUser} 
-                setActiveTab={setActiveTab} 
-                onShowConditions={() => setShowConditions(true)}
-                onShowSettings={() => setShowSettings(true)}
-                onLogout={handleLogout}
-              />
-            )}
-            {activeTab === 'gagner' && (
-              <Gagner user={user} setUser={setUser} />
-            )}
-            {activeTab === 'top' && (
-              <Top />
-            )}
-            {activeTab === 'inviter' && (
-              <Inviter user={user} setUser={setUser} />
-            )}
-            {activeTab === 'retrait' && (
-              <Retrait user={user} setUser={setUser} />
-            )}
-          </>
+    <div className="flex flex-col min-h-screen w-full">
+      <AnimatePresence>
+        {isOffline && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="bg-amber-600 text-white text-xs md:text-sm font-medium py-2.5 px-4 flex items-center justify-center gap-2 relative z-[200] shadow-md select-none text-center shrink-0"
+          >
+            <WifiOff size={15} className="shrink-0 animate-pulse text-amber-100" />
+            <span>
+              <strong>Mode hors-ligne activé.</strong> Vos données de gains locales sont conservées, mais la connexion est requise pour certaines actions (tâches, retraits).
+            </span>
+          </motion.div>
         )}
-      </main>
+      </AnimatePresence>
+
+      <div className="min-h-0 flex-1 bg-radial from-[#151532] via-[#090915] to-[#04040a] text-gray-100 flex flex-col md:flex-row relative overflow-hidden">
+        {/* Decorative ambient glowing background blobs */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#5e5bf0]/5 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[#a855f7]/5 rounded-full blur-[120px] pointer-events-none" />
+
+        {/* Sidebar Navigation */}
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onLogout={handleLogout}
+          userName={user.name}
+        />
+
+        {/* Main Tab Content Viewport */}
+        <main className="flex-1 flex flex-col relative z-10 pt-16 md:pt-0 pb-6 overflow-y-auto">
+          {showConditions ? (
+            <Conditions onBack={() => setShowConditions(false)} />
+          ) : showSettings ? (
+            <Settings 
+              onBack={() => setShowSettings(false)}
+              themeSetting={themeSetting}
+              onThemeChange={handleThemeChange}
+            />
+          ) : (
+            <>
+              {activeTab === 'accueil' && (
+                <Accueil 
+                  user={user} 
+                  setUser={setUser} 
+                  setActiveTab={setActiveTab} 
+                  onShowConditions={() => setShowConditions(true)}
+                  onShowSettings={() => setShowSettings(true)}
+                  onLogout={handleLogout}
+                />
+              )}
+              {activeTab === 'gagner' && (
+                <Gagner user={user} setUser={setUser} />
+              )}
+              {activeTab === 'top' && (
+                <Top />
+              )}
+              {activeTab === 'inviter' && (
+                <Inviter user={user} setUser={setUser} />
+              )}
+              {activeTab === 'retrait' && (
+                <Retrait user={user} setUser={setUser} />
+              )}
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

@@ -7,6 +7,15 @@ export interface WithdrawalTransaction {
   date: string;
 }
 
+export interface InvitedFriend {
+  id: string;
+  name: string;
+  email: string;
+  date: string;
+  status: 'Actif' | 'En attente';
+  reward: number;
+}
+
 export interface User {
   name: string;
   email: string;
@@ -18,6 +27,7 @@ export interface User {
   hasClaimedWhatsApp: boolean;
   unlockedAdLevel: number; // starts at 1, max 18
   withdrawalHistory: WithdrawalTransaction[];
+  invitedFriends?: InvitedFriend[];
 }
 
 export type TabType = 'accueil' | 'gagner' | 'top' | 'inviter' | 'retrait';

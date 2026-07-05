@@ -1,5 +1,5 @@
-import { useState, Dispatch, SetStateAction } from 'react';
-import { User } from '../types';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { User, InvitedFriend } from '../types';
 import { Gift, Copy, Share2, Check, MessageCircle, Send, Facebook, Sparkles, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -55,18 +55,97 @@ export default function Inviter({ user, setUser }: InviterProps) {
     window.open(url, '_blank');
   };
 
+  // Auto-generate mock friends if user.invites is greater than actual invitedFriends length on mount
+  useEffect(() => {
+    const friendsList = user.invitedFriends || [];
+    if (user.invites > friendsList.length) {
+      const difference = user.invites - friendsList.length;
+      const newFriends: InvitedFriend[] = [];
+      
+      const FIRST_NAMES = ["Abdoulaye", "Fatou", "Moustapha", "Aïssatou", "Ousmane", "Mariama", "Cheikh", "Khady", "Ibrahima", "Sokhna", "Babacar", "Aminata", "Amadou", "Rama", "Alioune", "Ndèye"];
+      const LAST_NAMES = ["Ndiaye", "Sow", "Diop", "Diallo", "Fall", "Ba", "Gueye", "Diagne", "Cisse", "Faye", "Sy", "Toure", "Sane", "Seck", "Mbacke", "Badiane"];
+
+      for (let i = 0; i < difference; i++) {
+        const first = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+        const last = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
+        const name = `${first} ${last}`;
+        const normalized = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '.');
+        const domains = ['gmail.com', 'yahoo.fr', 'outlook.com', 'hotmail.com'];
+        const domain = domains[Math.floor(Math.random() * domains.length)];
+        const email = `${normalized}@${domain}`;
+
+        // Generate some past date
+        const pastDate = new Date();
+        pastDate.setDate(pastDate.getDate() - (i + 1) * 2 - Math.floor(Math.random() * 3));
+        const day = String(pastDate.getDate()).padStart(2, '0');
+        const monthNames = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+        const month = monthNames[pastDate.getMonth()];
+        const year = pastDate.getFullYear();
+        const hours = String(pastDate.getHours()).padStart(2, '0');
+        const minutes = String(pastDate.getMinutes()).padStart(2, '0');
+        const dateStr = `${day} ${month} ${year} à ${hours}:${minutes}`;
+
+        newFriends.push({
+          id: Math.random().toString(36).substring(2, 11).toUpperCase(),
+          name,
+          email,
+          date: dateStr,
+          status: Math.random() > 0.15 ? 'Actif' : 'En attente',
+          reward: 800
+        });
+      }
+      
+      const updatedUser: User = {
+        ...user,
+        invitedFriends: [...friendsList, ...newFriends]
+      };
+      setUser(updatedUser);
+      localStorage.setItem('skill_money_user', JSON.stringify(updatedUser));
+    }
+  }, []);
+
   const simulateFriendSignUp = () => {
+    const FIRST_NAMES = ["Abdoulaye", "Fatou", "Moustapha", "Aïssatou", "Ousmane", "Mariama", "Cheikh", "Khady", "Ibrahima", "Sokhna", "Babacar", "Aminata", "Amadou", "Rama", "Alioune", "Ndèye"];
+    const LAST_NAMES = ["Ndiaye", "Sow", "Diop", "Diallo", "Fall", "Ba", "Gueye", "Diagne", "Cisse", "Faye", "Sy", "Toure", "Sane", "Seck", "Mbacke", "Badiane"];
+
+    const first = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+    const last = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
+    const name = `${first} ${last}`;
+    const normalized = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '.');
+    const domains = ['gmail.com', 'yahoo.fr', 'outlook.com', 'hotmail.com'];
+    const domain = domains[Math.floor(Math.random() * domains.length)];
+    const email = `${normalized}@${domain}`;
+
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const monthNames = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+    const month = monthNames[now.getMonth()];
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const dateStr = `${day} ${month} ${year} à ${hours}:${minutes}`;
+
+    const newFriend: InvitedFriend = {
+      id: Math.random().toString(36).substring(2, 11).toUpperCase(),
+      name,
+      email,
+      date: dateStr,
+      status: 'Actif',
+      reward: 800
+    };
+
     setUser((prev) => {
       const updatedUser = {
         ...prev,
         invites: prev.invites + 1,
         earningsFromInvites: prev.earningsFromInvites + 800,
         balance: prev.balance + 800,
+        invitedFriends: [newFriend, ...(prev.invitedFriends || [])],
       };
       localStorage.setItem('skill_money_user', JSON.stringify(updatedUser));
       return updatedUser;
     });
-    showToast("Simulation : Un ami s'est inscrit ! +800 F CFA ajoutés 🎉");
+    showToast(`Félicitations ! ${name} s'est inscrit avec votre lien. +800 F CFA ajoutés 🎉`);
   };
 
   const showToast = (message: string) => {
@@ -259,6 +338,61 @@ export default function Inviter({ user, setUser }: InviterProps) {
           <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Gagné</p>
           <p className="text-base font-extrabold text-[#8a87ff] mt-1.5 font-display">{formatCurrency(user.earningsFromInvites)} F CFA</p>
         </div>
+      </div>
+
+      {/* Invited Friends List Section */}
+      <div className="bg-[#111126] border border-[#1f1f3d] rounded-2xl p-5 md:p-6 space-y-4 shadow-xl">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm md:text-base font-semibold text-white font-display">
+            Membres parrainés ({user.invitedFriends?.length || 0})
+          </h2>
+          <button 
+            onClick={simulateFriendSignUp}
+            className="text-xs bg-[#5e5bf0]/10 border border-[#5e5bf0]/30 hover:bg-[#5e5bf0]/20 text-[#8a87ff] px-3 py-1.5 rounded-lg font-medium transition cursor-pointer"
+          >
+            Simuler un parrainage
+          </button>
+        </div>
+
+        {(!user.invitedFriends || user.invitedFriends.length === 0) ? (
+          <div className="text-center py-8 border border-dashed border-[#1f1f3d] rounded-xl space-y-2">
+            <p className="text-sm text-gray-400">Aucun parrainage enregistré pour le moment.</p>
+            <p className="text-xs text-gray-500 max-w-md mx-auto">
+              Partagez votre lien d'invitation avec vos proches sur WhatsApp ou Facebook pour commencer à voir vos filleuls s'afficher ici.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
+            {user.invitedFriends.map((friend) => (
+              <div 
+                key={friend.id}
+                className="flex items-center justify-between p-3.5 bg-[#1c1c3c]/50 border border-[#1f1f3d]/70 rounded-xl hover:border-[#1f1f3d] transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#5e5bf0]/10 border border-[#5e5bf0]/20 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                    {friend.name.charAt(0)}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs md:text-sm font-semibold text-white truncate">{friend.name}</p>
+                    <p className="text-[10px] text-gray-400 truncate">{friend.email}</p>
+                    <p className="text-[9px] text-gray-500 mt-0.5">{friend.date}</p>
+                  </div>
+                </div>
+
+                <div className="text-right shrink-0">
+                  <span className={`inline-block text-[9px] px-2 py-0.5 rounded-full font-bold mb-1 ${
+                    friend.status === 'Actif' 
+                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                      : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                  }`}>
+                    {friend.status}
+                  </span>
+                  <p className="text-xs font-bold text-white font-display">+{formatCurrency(friend.reward)} F CFA</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

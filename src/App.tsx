@@ -180,7 +180,7 @@ export default function App() {
 
   // Render main layout (Screens #2 to #7)
   return (
-    <div className="flex flex-col min-h-screen w-full">
+    <div className="flex flex-col min-h-screen md:h-screen w-full md:overflow-hidden">
       <AnimatePresence>
         {isOffline && (
           <motion.div

@@ -1,11 +1,12 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { User } from '../types';
-import { Play, Lock, CheckCircle, X, Sparkles, Trophy } from 'lucide-react';
+import { User, TabType } from '../types';
+import { Play, Lock, CheckCircle, X, Sparkles, Trophy, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface GagnerProps {
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
+  setActiveTab: (tab: TabType) => void;
 }
 
 interface AdCard {
@@ -26,12 +27,13 @@ const MOCK_ADS = [
   { title: "Neobank - Gérer son argent intelligemment", sponsor: "Revolut Partner", image: "https://images.unsplash.com/photo-1563013544-824ae1d704d3?w=500&auto=format&fit=crop&q=60" },
 ];
 
-export default function Gagner({ user, setUser }: GagnerProps) {
+export default function Gagner({ user, setUser, setActiveTab }: GagnerProps) {
   const [activeAd, setActiveAd] = useState<AdCard | null>(null);
   const [countdown, setCountdown] = useState(5);
   const [adFinished, setAdFinished] = useState(false);
   const [currentMockAd, setCurrentMockAd] = useState(MOCK_ADS[0]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<'success' | 'warning'>('success');
 
   // Countdown effect when activeAd is playing
   useEffect(() => {
@@ -50,13 +52,12 @@ export default function Gagner({ user, setUser }: GagnerProps) {
     // Only allow clicking the current active level
     if (card.level !== user.unlockedAdLevel) return;
 
-    // Pick a random mock ad
-    const randomAd = MOCK_ADS[Math.floor(Math.random() * MOCK_ADS.length)];
-    setCurrentMockAd(randomAd);
+    setToastType('warning');
+    setToastMessage("Les publicités sont temporairement indisponibles. Redirection vers le parrainage...");
     
-    setActiveAd(card);
-    setCountdown(5); // 5-second ad as shown in standard quick earning setups
-    setAdFinished(false);
+    setTimeout(() => {
+      setActiveTab('inviter');
+    }, 2500);
   };
 
   const handleClaimReward = () => {
@@ -135,10 +136,14 @@ export default function Gagner({ user, setUser }: GagnerProps) {
             initial={{ opacity: 0, y: -50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            className="fixed top-6 right-6 z-50 bg-[#1c1c3c] border border-green-500/30 px-5 py-3.5 rounded-xl shadow-[0_8px_30px_rgba(34,197,94,0.3)] flex items-center gap-3 max-w-sm"
+            className={`fixed top-6 right-6 z-50 bg-[#1c1c3c] border ${
+              toastType === 'warning' ? 'border-amber-500/30 shadow-[0_8px_30px_rgba(245,158,11,0.3)]' : 'border-green-500/30 shadow-[0_8px_30px_rgba(34,197,94,0.3)]'
+            } px-5 py-3.5 rounded-xl flex items-center gap-3 max-w-sm`}
           >
-            <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shrink-0">
-              <Sparkles size={18} />
+            <div className={`w-8 h-8 rounded-full ${
+              toastType === 'warning' ? 'bg-amber-500/20 text-amber-400' : 'bg-green-500/20 text-green-400'
+            } flex items-center justify-center shrink-0`}>
+              {toastType === 'warning' ? <AlertTriangle size={18} /> : <Sparkles size={18} />}
             </div>
             <p className="text-sm font-semibold text-white">{toastMessage}</p>
           </motion.div>

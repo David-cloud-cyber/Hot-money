@@ -231,7 +231,7 @@ export default function App() {
                 />
               )}
               {activeTab === 'gagner' && (
-                <Gagner user={user} setUser={setUser} />
+                <Gagner user={user} setUser={setUser} setActiveTab={setActiveTab} />
               )}
               {activeTab === 'top' && (
                 <Top />

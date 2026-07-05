@@ -1,6 +1,6 @@
 {
   "name": "Hot Money",
-  "description": "La meilleure plateforme pour gagner de l'argent en ligne. Gagnez de 200 à 500 F CFA par tâche selon votre niveau d'activité. Inscription gratuite – aucun frais à payer !",
+  "description": "La meilleure plateforme pour gagner de l'argent en ligne. Gagnez de 10 000 F à 50 000 F CFA par jour selon votre niveau d'activité. Inscription gratuite – aucun frais à payer !",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

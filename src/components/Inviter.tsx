@@ -55,99 +55,6 @@ export default function Inviter({ user, setUser }: InviterProps) {
     window.open(url, '_blank');
   };
 
-  // Auto-generate mock friends if user.invites is greater than actual invitedFriends length on mount
-  useEffect(() => {
-    const friendsList = user.invitedFriends || [];
-    if (user.invites > friendsList.length) {
-      const difference = user.invites - friendsList.length;
-      const newFriends: InvitedFriend[] = [];
-      
-      const FIRST_NAMES = ["Abdoulaye", "Fatou", "Moustapha", "Aïssatou", "Ousmane", "Mariama", "Cheikh", "Khady", "Ibrahima", "Sokhna", "Babacar", "Aminata", "Amadou", "Rama", "Alioune", "Ndèye"];
-      const LAST_NAMES = ["Ndiaye", "Sow", "Diop", "Diallo", "Fall", "Ba", "Gueye", "Diagne", "Cisse", "Faye", "Sy", "Toure", "Sane", "Seck", "Mbacke", "Badiane"];
-
-      for (let i = 0; i < difference; i++) {
-        const first = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
-        const last = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
-        const name = `${first} ${last}`;
-        const normalized = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '.');
-        const domains = ['gmail.com', 'yahoo.fr', 'outlook.com', 'hotmail.com'];
-        const domain = domains[Math.floor(Math.random() * domains.length)];
-        const email = `${normalized}@${domain}`;
-
-        // Generate some past date
-        const pastDate = new Date();
-        pastDate.setDate(pastDate.getDate() - (i + 1) * 2 - Math.floor(Math.random() * 3));
-        const day = String(pastDate.getDate()).padStart(2, '0');
-        const monthNames = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
-        const month = monthNames[pastDate.getMonth()];
-        const year = pastDate.getFullYear();
-        const hours = String(pastDate.getHours()).padStart(2, '0');
-        const minutes = String(pastDate.getMinutes()).padStart(2, '0');
-        const dateStr = `${day} ${month} ${year} à ${hours}:${minutes}`;
-
-        newFriends.push({
-          id: Math.random().toString(36).substring(2, 11).toUpperCase(),
-          name,
-          email,
-          date: dateStr,
-          status: Math.random() > 0.15 ? 'Actif' : 'En attente',
-          reward: 800
-        });
-      }
-      
-      const updatedUser: User = {
-        ...user,
-        invitedFriends: [...friendsList, ...newFriends]
-      };
-      setUser(updatedUser);
-      localStorage.setItem('skill_money_user', JSON.stringify(updatedUser));
-    }
-  }, []);
-
-  const simulateFriendSignUp = () => {
-    const FIRST_NAMES = ["Abdoulaye", "Fatou", "Moustapha", "Aïssatou", "Ousmane", "Mariama", "Cheikh", "Khady", "Ibrahima", "Sokhna", "Babacar", "Aminata", "Amadou", "Rama", "Alioune", "Ndèye"];
-    const LAST_NAMES = ["Ndiaye", "Sow", "Diop", "Diallo", "Fall", "Ba", "Gueye", "Diagne", "Cisse", "Faye", "Sy", "Toure", "Sane", "Seck", "Mbacke", "Badiane"];
-
-    const first = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
-    const last = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
-    const name = `${first} ${last}`;
-    const normalized = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '.');
-    const domains = ['gmail.com', 'yahoo.fr', 'outlook.com', 'hotmail.com'];
-    const domain = domains[Math.floor(Math.random() * domains.length)];
-    const email = `${normalized}@${domain}`;
-
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const monthNames = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
-    const month = monthNames[now.getMonth()];
-    const year = now.getFullYear();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const dateStr = `${day} ${month} ${year} à ${hours}:${minutes}`;
-
-    const newFriend: InvitedFriend = {
-      id: Math.random().toString(36).substring(2, 11).toUpperCase(),
-      name,
-      email,
-      date: dateStr,
-      status: 'Actif',
-      reward: 800
-    };
-
-    setUser((prev) => {
-      const updatedUser = {
-        ...prev,
-        invites: prev.invites + 1,
-        earningsFromInvites: prev.earningsFromInvites + 800,
-        balance: prev.balance + 800,
-        invitedFriends: [newFriend, ...(prev.invitedFriends || [])],
-      };
-      localStorage.setItem('skill_money_user', JSON.stringify(updatedUser));
-      return updatedUser;
-    });
-    showToast(`Félicitations ! ${name} s'est inscrit avec votre lien. +800 F CFA ajoutés 🎉`);
-  };
-
   const showToast = (message: string) => {
     setShowNotification(message);
     setTimeout(() => {
@@ -346,12 +253,6 @@ export default function Inviter({ user, setUser }: InviterProps) {
           <h2 className="text-sm md:text-base font-semibold text-white font-display">
             Membres parrainés ({user.invitedFriends?.length || 0})
           </h2>
-          <button 
-            onClick={simulateFriendSignUp}
-            className="text-xs bg-[#5e5bf0]/10 border border-[#5e5bf0]/30 hover:bg-[#5e5bf0]/20 text-[#8a87ff] px-3 py-1.5 rounded-lg font-medium transition cursor-pointer"
-          >
-            Simuler un parrainage
-          </button>
         </div>
 
         {(!user.invitedFriends || user.invitedFriends.length === 0) ? (

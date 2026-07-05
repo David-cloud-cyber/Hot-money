@@ -40,7 +40,7 @@ export default function App() {
     withdrawalHistory: [],
   });
 
-  // Check if session exists in localStorage on startup
+  // Check if session exists in localStorage on startup and sync in background
   useEffect(() => {
     const savedUser = localStorage.getItem('skill_money_user');
     if (savedUser) {
@@ -48,11 +48,68 @@ export default function App() {
         const parsed = JSON.parse(savedUser) as User;
         setUser(parsed);
         setIsLoggedIn(true);
+
+        // Fetch latest version from backend to ensure real-time parrainages and data sync
+        fetch('/api/user/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(parsed),
+        })
+        .then(res => {
+          if (res.ok) return res.json();
+        })
+        .then(serverUser => {
+          if (serverUser) {
+            setUser(serverUser);
+            localStorage.setItem('skill_money_user', JSON.stringify(serverUser));
+          }
+        })
+        .catch(err => console.error('Failed initial user sync:', err));
       } catch (e) {
         console.error('Failed to parse saved user', e);
       }
     }
   }, []);
+
+  // Save to localStorage and sync with server whenever user changes (debounced)
+  useEffect(() => {
+    if (isLoggedIn && user.email) {
+      localStorage.setItem('skill_money_user', JSON.stringify(user));
+      
+      const syncUser = async () => {
+        try {
+          const response = await fetch('/api/user/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user),
+          });
+          if (response.ok) {
+            const serverUser = await response.json();
+            // Compare and update state if server has newer values
+            if (
+              serverUser.balance !== user.balance ||
+              serverUser.invites !== user.invites ||
+              serverUser.unlockedAdLevel !== user.unlockedAdLevel ||
+              serverUser.hasJoinedWhatsApp !== user.hasJoinedWhatsApp ||
+              serverUser.hasClaimedWhatsApp !== user.hasClaimedWhatsApp ||
+              JSON.stringify(serverUser.withdrawalHistory) !== JSON.stringify(user.withdrawalHistory) ||
+              JSON.stringify(serverUser.invitedFriends) !== JSON.stringify(user.invitedFriends)
+            ) {
+              setUser(serverUser);
+            }
+          }
+        } catch (err) {
+          console.error('Failed to sync user with server:', err);
+        }
+      };
+
+      const timer = setTimeout(() => {
+        syncUser();
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [user, isLoggedIn]);
 
   // Monitor online/offline status
   useEffect(() => {
@@ -75,23 +132,9 @@ export default function App() {
     localStorage.setItem('hot_money_theme', 'dark');
   }, []);
 
-  const handleAuthSuccess = (userData: { name: string; email: string; referralCodeEntered: string }) => {
-    const newUserState: User = {
-      name: userData.name || 'Awa Diop',
-      email: userData.email,
-      balance: 800, // Starting balance from screenshots
-      referralCode: generateReferralCode(), // Generate unique referral code on signup/login!
-      invites: 0,
-      earningsFromInvites: 0,
-      hasJoinedWhatsApp: false,
-      hasClaimedWhatsApp: false,
-      unlockedAdLevel: 1,
-      withdrawalHistory: [],
-    };
-
-    // If they used a valid referral code, let's pre-add a bonus or simulate things!
-    setUser(newUserState);
-    localStorage.setItem('skill_money_user', JSON.stringify(newUserState));
+  const handleAuthSuccess = (serverUser: User) => {
+    setUser(serverUser);
+    localStorage.setItem('skill_money_user', JSON.stringify(serverUser));
     setIsLoggedIn(true);
   };
 

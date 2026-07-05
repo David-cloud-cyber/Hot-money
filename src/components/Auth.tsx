@@ -1,20 +1,22 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { User, Mail, Lock, Eye, EyeOff, Gift, ArrowRight } from 'lucide-react';
+import { User as UserIcon, Mail, Lock, Eye, EyeOff, Gift, ArrowRight } from 'lucide-react';
+import { User } from '../types';
 
 interface AuthProps {
-  onAuthSuccess: (userData: { name: string; email: string; referralCodeEntered: string }) => void;
+  onAuthSuccess: (user: User) => void;
 }
 
 export default function Auth({ onAuthSuccess }: AuthProps) {
   const [isLogin, setIsLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   
   // Form fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [referralCode, setReferralCode] = useState('C9672D2E'); // Default from image
+  const [referralCode, setReferralCode] = useState(''); // Empty by default so it's clean, or filled by URL
   
   const [error, setError] = useState('');
 
@@ -28,8 +30,9 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
     }
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (isLoading) return;
     setError('');
 
     if (!email || !password) {
@@ -52,12 +55,34 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
       }
     }
 
-    // Success!
-    onAuthSuccess({
-      name: isLogin ? (name || 'Awa Diop') : name,
-      email: email,
-      referralCodeEntered: referralCode
-    });
+    setIsLoading(true);
+    try {
+      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const payload = isLogin 
+        ? { email, password } 
+        : { name, email, password, referralCodeEntered: referralCode };
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || 'Une erreur est survenue lors de l\'authentification.');
+        setIsLoading(false);
+        return;
+      }
+
+      onAuthSuccess(data);
+    } catch (err) {
+      console.error(err);
+      setError('Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -110,7 +135,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
-                  <User size={18} className="text-[#515175]" />
+                  <UserIcon size={18} className="text-[#515175]" />
                 </div>
                 <input
                   type="text"
@@ -226,10 +251,11 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white font-medium text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 group cursor-pointer transition-all duration-300 shadow-[0_4px_20px_rgba(94,91,240,0.35)] hover:shadow-[0_4px_25px_rgba(94,91,240,0.5)] transform hover:-translate-y-0.5 active:translate-y-0"
+            disabled={isLoading}
+            className={`w-full ${isLoading ? 'bg-[#5e5bf0]/60 cursor-not-allowed' : 'bg-[#5e5bf0] hover:bg-[#4d4ae0] cursor-pointer'} text-white font-medium text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 group transition-all duration-300 shadow-[0_4px_20px_rgba(94,91,240,0.35)] hover:shadow-[0_4px_25px_rgba(94,91,240,0.5)] transform hover:-translate-y-0.5 active:translate-y-0`}
           >
-            <span>{isLogin ? 'Se connecter' : 'Créer un compte'}</span>
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition duration-200" />
+            <span>{isLoading ? 'Chargement...' : (isLogin ? 'Se connecter' : 'Créer un compte')}</span>
+            {!isLoading && <ArrowRight size={16} className="group-hover:translate-x-1 transition duration-200" />}
           </button>
         </form>
 

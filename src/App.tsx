@@ -8,6 +8,7 @@ import Top from './components/Top';
 import Inviter from './components/Inviter';
 import Retrait from './components/Retrait';
 import Conditions from './components/Conditions';
+import Settings from './components/Settings';
 
 function generateReferralCode(): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -22,6 +23,8 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('accueil');
   const [showConditions, setShowConditions] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [themeSetting, setThemeSetting] = useState<'system' | 'light' | 'dark'>('system');
   const [user, setUser] = useState<User>({
     name: '',
     email: '',
@@ -49,6 +52,58 @@ export default function App() {
     }
   }, []);
 
+  // Load theme setting from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('hot_money_theme') as 'system' | 'light' | 'dark' | null;
+    if (savedTheme) {
+      setThemeSetting(savedTheme);
+    }
+  }, []);
+
+  // Update document theme classes dynamically based on theme preference
+  useEffect(() => {
+    const updateTheme = () => {
+      let resolvedTheme: 'light' | 'dark' = 'dark';
+      if (themeSetting === 'system') {
+        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        resolvedTheme = isSystemDark ? 'dark' : 'light';
+      } else {
+        resolvedTheme = themeSetting;
+      }
+
+      if (resolvedTheme === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+    };
+
+    updateTheme();
+
+    if (themeSetting === 'system') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const listener = (e: MediaQueryListEvent) => {
+        const resolved = e.matches ? 'dark' : 'light';
+        if (resolved === 'light') {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      };
+      mediaQuery.addEventListener('change', listener);
+      return () => mediaQuery.removeEventListener('change', listener);
+    }
+  }, [themeSetting]);
+
+  const handleThemeChange = (newTheme: 'system' | 'light' | 'dark') => {
+    setThemeSetting(newTheme);
+    localStorage.setItem('hot_money_theme', newTheme);
+  };
+
   const handleAuthSuccess = (userData: { name: string; email: string; referralCodeEntered: string }) => {
     const newUserState: User = {
       name: userData.name || 'Awa Diop',
@@ -74,11 +129,13 @@ export default function App() {
     setIsLoggedIn(false);
     setActiveTab('accueil');
     setShowConditions(false);
+    setShowSettings(false);
   };
 
-  // Reset conditions view when changing tabs
+  // Reset conditions and settings view when changing tabs
   useEffect(() => {
     setShowConditions(false);
+    setShowSettings(false);
   }, [activeTab]);
 
   // If not logged in, render Auth flow (Screen #1)
@@ -105,6 +162,12 @@ export default function App() {
       <main className="flex-1 flex flex-col relative z-10 pt-16 md:pt-0 pb-6">
         {showConditions ? (
           <Conditions onBack={() => setShowConditions(false)} />
+        ) : showSettings ? (
+          <Settings 
+            onBack={() => setShowSettings(false)}
+            themeSetting={themeSetting}
+            onThemeChange={handleThemeChange}
+          />
         ) : (
           <>
             {activeTab === 'accueil' && (
@@ -113,6 +176,7 @@ export default function App() {
                 setUser={setUser} 
                 setActiveTab={setActiveTab} 
                 onShowConditions={() => setShowConditions(true)}
+                onShowSettings={() => setShowSettings(true)}
                 onLogout={handleLogout}
               />
             )}

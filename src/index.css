@@ -47,3 +47,150 @@ body {
 .text-glow {
   text-shadow: 0 0 10px var(--color-brand-glow);
 }
+
+/* ==========================================================================
+   LIGHT MODE OVERRIDES
+   ========================================================================== */
+
+.light {
+  color-scheme: light;
+}
+
+.light body {
+  background-color: #f5f6fa !important;
+  background-image: radial-gradient(circle at 50% 50%, #fefefe 0%, #f5f6fa 100%) !important;
+  color: #1e293b !important;
+}
+
+/* Backgrounds & Containers */
+.light .bg-[#111126],
+.light .bg-[#111126]\/80,
+.light .bg-[#111126]\/60,
+.light .bg-[#111126]\/90,
+.light .bg-[#1c1c3c],
+.light .bg-[#1c1c3c]\/50,
+.light .bg-[#18182c]\/50,
+.light .bg-[#0d0d1f],
+.light .bg-slate-900\/50 {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+.light .bg-[#090915] {
+  background-color: #f1f5f9 !important;
+}
+
+/* Borders */
+.light .border-[#1f1f3d],
+.light .border-[#1f1f3d]\/30,
+.light .border-[#1f1f3d]\/50,
+.light .border-[#1f1f3d]\/60,
+.light .border-[#5e5bf0]\/40,
+.light .border-indigo-500\/30 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Shadow enhancements for cards in light mode */
+.light .bg-[#111126],
+.light .bg-[#111126]\/80,
+.light .bg-[#111126]\/60,
+.light .bg-[#1c1c3c] {
+  box-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.12), 0 2px 8px -1px rgba(148, 163, 184, 0.08) !important;
+}
+
+/* Text Colors */
+.light .text-white,
+.light .text-gray-100 {
+  color: #0f172a !important;
+}
+
+.light .text-gray-200 {
+  color: #1e293b !important;
+}
+
+.light .text-gray-300 {
+  color: #334155 !important;
+}
+
+.light .text-gray-400 {
+  color: #475569 !important;
+}
+
+.light .text-gray-500 {
+  color: #64748b !important;
+}
+
+/* Brand Special Colors */
+.light .text-[#8a87ff] {
+  color: #5e5bf0 !important;
+}
+
+.light .text-glow {
+  text-shadow: 0 0 10px rgba(94, 91, 240, 0.2) !important;
+}
+
+.light .from-[#151532] {
+  --tw-gradient-from: #f8fafc !important;
+}
+
+.light .via-[#090915] {
+  --tw-gradient-to: #f1f5f9 !important;
+}
+
+.light .to-[#04040a] {
+  --tw-gradient-to: #e2e8f0 !important;
+}
+
+/* Gagner Tab specific style updates for light mode */
+.light .bg-green-500\/20 {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+.light .bg-[#5e5bf0]\/20 {
+  background-color: rgba(94, 91, 240, 0.1) !important;
+}
+
+.light .hover\:bg-[#1c1c3c]\/50:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Locked / Completed card overlays */
+.light .opacity-40 {
+  opacity: 0.65 !important;
+}
+
+.light .bg-indigo-950\/30 {
+  background-color: rgba(94, 91, 240, 0.04) !important;
+}
+
+.light .text-amber-400 {
+  color: #d97706 !important;
+}
+
+.light .text-emerald-400 {
+  color: #059669 !important;
+}
+
+.light .text-sky-400 {
+  color: #0284c7 !important;
+}
+
+.light .text-red-400 {
+  color: #dc2626 !important;
+}
+
+.light .border-red-500\/30 {
+  border-color: rgba(220, 38, 38, 0.2) !important;
+}
+
+.light .bg-red-500\/10 {
+  background-color: rgba(220, 38, 38, 0.05) !important;
+}
+
+.light .border-green-500\/30 {
+  border-color: rgba(34, 197, 94, 0.2) !important;
+}
+
+.light .bg-green-500\/10 {
+  background-color: rgba(34, 197, 94, 0.05) !important;
+}

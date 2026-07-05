@@ -12,7 +12,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
   const [copied, setCopied] = useState(false);
   const [showNotification, setShowNotification] = useState<string | null>(null);
 
-  const inviteLink = `https://hotmoney.8unb.xyz/auth?ref=${user.referralCode}`;
+  const inviteLink = `https://www.hotmoney.fun/auth?ref=${user.referralCode}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(inviteLink);

@@ -1,6 +1,6 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { User, TabType } from '../types';
-import { Wallet, ExternalLink, ArrowRight, MessageCircle, AlertCircle, CheckCircle, FileText, LogOut } from 'lucide-react';
+import { Wallet, ExternalLink, ArrowRight, MessageCircle, AlertCircle, CheckCircle, FileText, LogOut, Settings as SettingsIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface AccueilProps {
@@ -8,6 +8,7 @@ interface AccueilProps {
   setUser: Dispatch<SetStateAction<User>>;
   setActiveTab: (tab: TabType) => void;
   onShowConditions?: () => void;
+  onShowSettings?: () => void;
   onLogout?: () => void;
 }
 
@@ -36,7 +37,7 @@ const RANDOM_NAMES = [
 const RANDOM_METHODS = ['MTN MoMo', 'Orange Money', 'Wave', 'Free Money', 'Airtel Money'];
 const RANDOM_AMOUNTS = [10000, 15000, 25000, 30000, 45000, 50000, 75000, 80000, 100000, 120000, 150000];
 
-export default function Accueil({ user, setUser, setActiveTab, onShowConditions, onLogout }: AccueilProps) {
+export default function Accueil({ user, setUser, setActiveTab, onShowConditions, onShowSettings, onLogout }: AccueilProps) {
   const [joinedWhatsApp, setJoinedWhatsApp] = useState(user.hasJoinedWhatsApp);
   const [claimedWhatsApp, setClaimedWhatsApp] = useState(user.hasClaimedWhatsApp);
   const [liveWithdrawals, setLiveWithdrawals] = useState<LiveWithdrawal[]>(INITIAL_WITHDRAWALS);
@@ -191,6 +192,17 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
                   >
                     <FileText size={16} className="text-[#8a87ff]" />
                     <span>Conditions générales</span>
+                  </button>
+                  <div className="h-[1px] bg-[#1f1f3d]" />
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      onShowSettings?.();
+                    }}
+                    className="w-full px-4 py-3.5 flex items-center gap-3.5 text-sm font-medium text-gray-200 hover:bg-[#1f1f3d]/60 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <SettingsIcon size={16} className="text-[#8a87ff]" />
+                    <span>Paramètres</span>
                   </button>
                   <div className="h-[1px] bg-[#1f1f3d]" />
                   <button

@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, FormEvent } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction, FormEvent } from 'react';
 import { User, WithdrawalTransaction } from '../types';
 import { Wallet, History, AlertCircle, ArrowLeft, Send, CheckCircle, Star, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -12,6 +12,16 @@ interface Country {
   code: string;
   name: string;
   flag: string;
+}
+
+interface CommunityReview {
+  id: string;
+  name: string;
+  rating: number;
+  timeAgo: string;
+  comment: string;
+  initial: string;
+  timestamp: number;
 }
 
 const COUNTRIES: Country[] = [
@@ -31,11 +41,21 @@ const COUNTRIES: Country[] = [
   { code: 'TG', name: 'Togo', flag: '🇹🇬' }
 ];
 
-const COMMUNITY_REVIEWS = [
-  { name: 'Fatou Sow', rating: 5, timeAgo: 'il y a 12 min', comment: '69 000 F CFA reçus sur Moov Money au Gabon, tout s’est bien passé.', initial: 'FS' },
-  { name: 'Awa Diop', rating: 5, timeAgo: 'il y a 28 min', comment: '15 000 F CFA reçus sur Orange Money au Sénégal, merci beaucoup !', initial: 'AD' },
-  { name: 'Moussa Diallo', rating: 5, timeAgo: 'il y a 1 heure', comment: '45 000 F CFA reçus sur Wave en Côte d’Ivoire, très rapide !', initial: 'MD' },
-  { name: 'Ibrahim Touré', rating: 5, timeAgo: 'il y a 2 heures', comment: '100 000 F CFA reçus sur MTN MoMo au Cameroun, service incroyable.', initial: 'IT' }
+const POOL_COMMUNITY_REVIEWS = [
+  { name: 'Saliou Dieng', comment: 'Retrait de 25 000 F reçu sur Wave au Sénégal. Très rapide !', initial: 'SD' },
+  { name: 'Khadija Yahaya', comment: '10 000 F CFA sur Airtel Money au Niger reçu ce matin. Service parfait.', initial: 'KY' },
+  { name: 'Alassane Sylla', comment: 'Mes 50 000 F sont arrivés sur Orange Money au Mali. Incroyable.', initial: 'AS' },
+  { name: 'Ndeye Fall', comment: 'Franchement ravie, 30 000 F CFA sur Wave Sénégal reçu en 10 min.', initial: 'NF' },
+  { name: 'Koffi Yao', comment: '45 000 F CFA sur MTN MoMo en Côte d’Ivoire. Je recommande vivement.', initial: 'KY' },
+  { name: 'Mariama Barry', comment: 'Super ! Retrait de 15 000 F reçu au Cameroun sur MTN MoMo.', initial: 'MB' },
+  { name: 'Ousmane Ndoye', comment: '75 000 F CFA bien crédités sur Wave. Hot Money est le meilleur.', initial: 'ON' },
+  { name: 'Aïcha Ouattara', comment: '20 000 F CFA reçus sur Orange Money en Côte d’Ivoire. Top !', initial: 'AO' },
+  { name: 'Bakary Traoré', comment: 'Simple et fiable. 40 000 F reçu par Orange Money au Mali.', initial: 'BT' },
+  { name: 'Sokhna Mbaye', comment: 'Retrait Orange Money au Sénégal validé avec succès. Merci !', initial: 'SM' },
+  { name: 'Diallo Ismaël', comment: '120 000 F retirés par MTN MoMo au Cameroun sans problème.', initial: 'DI' },
+  { name: 'Jean-Pierre Kaboré', comment: 'Paiement reçu sur Orange Money au Burkina Faso. Génial !', initial: 'JK' },
+  { name: 'Serge Mba', comment: '60 000 F CFA reçus sur Airtel Money au Gabon. Rapide et propre.', initial: 'SM' },
+  { name: 'Fanta Dembélé', comment: 'Wave Côte d’Ivoire approuvé. J’ai reçu mes gains de la journée.', initial: 'FD' }
 ];
 
 export default function Retrait({ user, setUser }: RetraitProps) {
@@ -47,6 +67,59 @@ export default function Retrait({ user, setUser }: RetraitProps) {
   const [error, setError] = useState('');
   const [withdrawalSuccess, setWithdrawalSuccess] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const [reviews, setReviews] = useState<CommunityReview[]>([
+    { id: '1', name: 'Fatou Sow', rating: 5, timeAgo: 'il y a 3 min', comment: '69 000 F CFA reçus sur Moov Money au Gabon, tout s’est bien passé.', initial: 'FS', timestamp: Date.now() - 180000 },
+    { id: '2', name: 'Awa Diop', rating: 5, timeAgo: 'il y a 8 min', comment: '15 000 F CFA reçus sur Orange Money au Sénégal, merci beaucoup !', initial: 'AD', timestamp: Date.now() - 480000 },
+    { id: '3', name: 'Moussa Diallo', rating: 5, timeAgo: 'il y a 14 min', comment: '45 000 F CFA reçus sur Wave en Côte d’Ivoire, très rapide !', initial: 'MD', timestamp: Date.now() - 840000 },
+    { id: '4', name: 'Ibrahim Touré', rating: 5, timeAgo: 'il y a 25 min', comment: '100 000 F CFA reçus sur MTN MoMo au Cameroun, service incroyable.', initial: 'IT', timestamp: Date.now() - 1500000 }
+  ]);
+
+  // Periodic update of community reviews to show live social proof
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const poolItem = POOL_COMMUNITY_REVIEWS[Math.floor(Math.random() * POOL_COMMUNITY_REVIEWS.length)];
+      
+      setReviews((prev) => {
+        // Prevent adding duplicate names currently on screen
+        const exists = prev.some(r => r.name === poolItem.name);
+        if (exists) return prev;
+        
+        const newReview: CommunityReview = {
+          id: Math.random().toString(),
+          name: poolItem.name,
+          rating: Math.random() > 0.15 ? 5 : 4,
+          timeAgo: "à l'instant",
+          comment: poolItem.comment,
+          initial: poolItem.initial,
+          timestamp: Date.now()
+        };
+        
+        return [newReview, ...prev.slice(0, 3)];
+      });
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Update timeAgo string over time
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setReviews((prev) =>
+        prev.map((item) => {
+          const diffSeconds = Math.floor((Date.now() - item.timestamp) / 1000);
+          if (diffSeconds < 60) {
+            return { ...item, timeAgo: "à l'instant" };
+          } else {
+            const diffMinutes = Math.floor(diffSeconds / 60);
+            return { ...item, timeAgo: `il y a ${diffMinutes} min` };
+          }
+        })
+      );
+    }, 15000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleCountrySelect = (country: Country) => {
     if (user.balance < 10000) {
@@ -416,30 +489,47 @@ export default function Retrait({ user, setUser }: RetraitProps) {
             <p className="text-2xs font-light text-gray-400 pb-1">Utilisateurs ayant reçu leurs retraits</p>
 
             <div className="grid gap-3.5">
-              {COMMUNITY_REVIEWS.map((rev, index) => (
-                <div key={index} className="bg-[#111126]/40 border border-[#1f1f3d]/60 rounded-xl p-4 space-y-2.5">
-                  <div className="flex items-center justify-between text-2xs">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full bg-[#5e5bf0]/15 text-[#8a87ff] font-bold text-xs flex items-center justify-center border border-[#5e5bf0]/25 uppercase">
-                        {rev.initial}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-white">{rev.name}</p>
-                        {/* 5 gold stars */}
-                        <div className="flex items-center gap-0.5 text-[#fbbf24] mt-0.5">
-                          {Array.from({ length: rev.rating }).map((_, i) => (
-                            <Star key={i} size={10} fill="currentColor" />
-                          ))}
+              <AnimatePresence initial={false}>
+                {reviews.map((rev) => (
+                  <motion.div
+                    layout
+                    key={rev.id}
+                    initial={{ opacity: 0, height: 0, y: -15 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: 15 }}
+                    transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                    className="bg-[#111126]/40 border border-[#1f1f3d]/60 rounded-xl p-4 space-y-2.5 overflow-hidden"
+                  >
+                    <div className="flex items-center justify-between text-2xs">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-full bg-[#5e5bf0]/15 text-[#8a87ff] font-bold text-xs flex items-center justify-center border border-[#5e5bf0]/25 uppercase">
+                          {rev.initial}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-white">{rev.name}</p>
+                          {/* 4 or 5 gold stars */}
+                          <div className="flex items-center gap-0.5 text-[#fbbf24] mt-0.5">
+                            {Array.from({ length: rev.rating }).map((_, i) => (
+                              <Star key={i} size={10} fill="currentColor" />
+                            ))}
+                          </div>
                         </div>
                       </div>
+                      <motion.span 
+                        key={rev.timeAgo}
+                        initial={{ opacity: 0.5 }}
+                        animate={{ opacity: 1 }}
+                        className="text-gray-500 font-light"
+                      >
+                        {rev.timeAgo}
+                      </motion.span>
                     </div>
-                    <span className="text-gray-500 font-light">{rev.timeAgo}</span>
-                  </div>
-                  <p className="text-xs text-gray-300 font-light leading-relaxed pl-10">
-                    "{rev.comment}"
-                  </p>
-                </div>
-              ))}
+                    <p className="text-xs text-gray-300 font-light leading-relaxed pl-10">
+                      "{rev.comment}"
+                    </p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
         </>

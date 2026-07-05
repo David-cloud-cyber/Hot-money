@@ -32,7 +32,9 @@ const INITIAL_WITHDRAWALS: LiveWithdrawal[] = [
 
 const RANDOM_NAMES = [
   'Mariama B.', 'Roosevelt B.', 'Fatou S.', 'Steve M.', 'Aïcha O.', 'Ousmane N.', 
-  'Saliou D.', 'Sokhna M.', 'Amadou C.', 'Bakary T.', 'Khadija Y.', 'Diallo I.'
+  'Saliou D.', 'Sokhna M.', 'Amadou C.', 'Bakary T.', 'Khadija Y.', 'Diallo I.',
+  'Jean-Pierre K.', 'Alassane S.', 'Koffi Y.', 'Ndeye F.', 'Modou L.', 'Yao B.',
+  'Chantal A.', 'Ismaël T.', 'Salif K.', 'Fanta D.', 'Serge M.', 'Bernadette O.'
 ];
 const RANDOM_METHODS = ['MTN MoMo', 'Orange Money', 'Wave', 'Free Money', 'Airtel Money'];
 const RANDOM_AMOUNTS = [10000, 15000, 25000, 30000, 45000, 50000, 75000, 80000, 100000, 120000, 150000];
@@ -65,7 +67,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
         const updated = [newWithdrawal, ...prev];
         return updated.slice(0, 7);
       });
-    }, 15000); // Add a new one every 15 seconds
+    }, 4000); // Add a new one every 4 seconds for maximum live activity
 
     return () => clearInterval(interval);
   }, []);
@@ -96,8 +98,6 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
       localStorage.setItem('skill_money_user', JSON.stringify(updated));
       return updated;
     });
-    // Open WhatsApp channel link in new tab
-    window.open('https://whatsapp.com/channel/0029VbDBuA89RZAQLWsC5j1l', '_blank');
     
     // Display helpful message
     showToast("Félicitations ! Vous pouvez maintenant réclamer votre récompense de 500 F CFA !");
@@ -274,25 +274,33 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
 
             {/* Action buttons */}
             <div className="flex flex-wrap items-center gap-3">
-              <button
-                onClick={handleJoinWhatsApp}
-                disabled={joinedWhatsApp}
-                className={`flex items-center gap-1.5 px-4.5 py-2.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
-                  joinedWhatsApp
-                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                    : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/15'
-                }`}
-              >
-                <span>{joinedWhatsApp ? 'Rejoint' : 'Rejoindre'}</span>
-                <ExternalLink size={13} />
-              </button>
+              {!joinedWhatsApp ? (
+                <a
+                  href="https://whatsapp.com/channel/0029VbDBuA89RZAQLWsC5j1l"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleJoinWhatsApp}
+                  className="flex items-center gap-1.5 px-4.5 py-2.5 rounded-xl text-xs font-semibold cursor-pointer transition-all bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/15"
+                >
+                  <span>Rejoindre</span>
+                  <ExternalLink size={13} />
+                </a>
+              ) : (
+                <button
+                  disabled
+                  className="flex items-center gap-1.5 px-4.5 py-2.5 rounded-xl text-xs font-semibold transition-all bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 cursor-not-allowed"
+                >
+                  <span>Rejoint</span>
+                  <ExternalLink size={13} />
+                </button>
+              )}
 
               <button
                 onClick={handleClaimReward}
                 disabled={!joinedWhatsApp || claimedWhatsApp}
                 className={`px-4.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                   claimedWhatsApp
-                    ? 'bg-gray-500/10 text-gray-500 border border-gray-500/10'
+                    ? 'bg-gray-500/10 text-gray-500 border border-gray-500/10 cursor-not-allowed'
                     : joinedWhatsApp
                     ? 'bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white shadow-lg shadow-[#5e5bf0]/20 cursor-pointer'
                     : 'bg-[#1f1f3d] text-gray-400 cursor-not-allowed border border-[#2b2b52]'
@@ -335,7 +343,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
                 animate={{ opacity: 1, height: 'auto', y: 0 }}
                 exit={{ opacity: 0, height: 0, y: 10 }}
                 transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-                className="bg-[#111126]/60 border border-[#1f1f3d] rounded-xl px-4 py-3.5 flex items-center justify-between text-xs"
+                className="bg-[#111126]/60 border border-[#1f1f3d] rounded-xl px-4 py-3.5 flex items-center justify-between text-xs overflow-hidden"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-9 h-9 rounded-lg bg-[#1a1a38] border border-[#2b2b52] flex items-center justify-center text-gray-400 shrink-0">

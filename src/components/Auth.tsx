@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { User, Mail, Lock, Eye, EyeOff, Gift, ArrowRight } from 'lucide-react';
 
 interface AuthProps {
@@ -17,6 +17,16 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
   const [referralCode, setReferralCode] = useState('C9672D2E'); // Default from image
   
   const [error, setError] = useState('');
+
+  // Automatically parse referral code from URL if present (?ref=CODE)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      setReferralCode(ref.toUpperCase());
+      setIsLogin(false); // Switch to registration tab automatically
+    }
+  }, []);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

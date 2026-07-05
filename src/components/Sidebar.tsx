@@ -74,7 +74,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout, userName }:
                   onClick={() => handleTabClick(item.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 cursor-pointer ${
                     isActive
-                      ? 'bg-[#5e5bf0] text-white shadow-[0_4px_15px_rgba(94,91,240,0.3)]'
+                      ? 'bg-[#ff6b00] text-white shadow-[0_4px_15px_rgba(255,107,0,0.3)]'
                       : 'text-gray-400 hover:text-white hover:bg-[#1c1c3c]/50'
                   }`}
                 >
@@ -89,7 +89,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout, userName }:
         {/* User profile info & Logout */}
         <div className="space-y-4 pt-4 border-t border-[#1f1f3d]/50">
           <div className="flex items-center gap-3 px-2 py-1">
-            <div className="w-8 h-8 rounded-full bg-[#5e5bf0]/20 flex items-center justify-center text-[#8a87ff] font-bold text-sm border border-[#5e5bf0]/30">
+            <div className="w-8 h-8 rounded-full bg-[#ff6b00]/20 flex items-center justify-center text-[#ffaa44] font-bold text-sm border border-[#ff6b00]/30">
               {userName.charAt(0).toUpperCase()}
             </div>
             <div className="flex flex-col min-w-0">
@@ -139,7 +139,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout, userName }:
                       onClick={() => handleTabClick(item.id)}
                       className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 cursor-pointer ${
                         isActive
-                          ? 'bg-[#5e5bf0] text-white shadow-[0_4px_15px_rgba(94,91,240,0.3)]'
+                          ? 'bg-[#ff6b00] text-white shadow-[0_4px_15px_rgba(255,107,0,0.3)]'
                           : 'text-gray-400 hover:text-white hover:bg-[#1c1c3c]/50'
                       }`}
                     >
@@ -154,7 +154,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout, userName }:
             {/* Profile & Logout */}
             <div className="space-y-4 pt-4 border-t border-[#1f1f3d]/50">
               <div className="flex items-center gap-3 px-2 py-1">
-                <div className="w-8 h-8 rounded-full bg-[#5e5bf0]/20 flex items-center justify-center text-[#8a87ff] font-bold text-sm">
+                <div className="w-8 h-8 rounded-full bg-[#ff6b00]/20 flex items-center justify-center text-[#ffaa44] font-bold text-sm">
                   {userName.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex flex-col min-w-0">

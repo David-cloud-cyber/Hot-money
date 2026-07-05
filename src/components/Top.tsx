@@ -114,14 +114,14 @@ export default function Top() {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-display font-bold text-white tracking-tight flex items-center gap-2">
-            <Trophy className="text-[#8a87ff]" size={22} />
+            <Trophy className="text-[#ffaa44]" size={22} />
             <span>Meilleurs gains</span>
           </h1>
           <p className="text-[#a0aec0] text-xs font-light">
             Classement en direct · Mise à jour instantanée
           </p>
         </div>
-        <div className="flex items-center gap-1.5 bg-[#5e5bf0]/10 px-2.5 py-1 rounded-full border border-[#5e5bf0]/20 text-[10px] font-bold text-[#8a87ff] uppercase tracking-wider animate-pulse">
+        <div className="flex items-center gap-1.5 bg-[#ff6b00]/10 px-2.5 py-1 rounded-full border border-[#ff6b00]/20 text-[10px] font-bold text-[#ffaa44] uppercase tracking-wider animate-pulse">
           Mise à jour en direct
         </div>
       </div>
@@ -146,7 +146,7 @@ export default function Top() {
             <motion.p 
               key={p2.amount}
               initial={{ scale: 1.1, color: '#60a5fa' }}
-              animate={{ scale: 1, color: '#8a87ff' }}
+              animate={{ scale: 1, color: '#ffaa44' }}
               className="text-[10px] font-bold mt-0.5"
             >
               {formatCurrency(p2.amount)}
@@ -169,7 +169,7 @@ export default function Top() {
               key={p1.name}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#5e5bf0] to-[#a855f7] flex items-center justify-center text-white font-bold text-lg shadow-[0_0_20px_rgba(94,91,240,0.5)] border-2 border-amber-400"
+              className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#ff6b00] to-[#ff3d00] flex items-center justify-center text-white font-bold text-lg shadow-[0_0_20px_rgba(255,107,0,0.5)] border-2 border-amber-400"
             >
               {p1.initial}
             </motion.div>
@@ -189,9 +189,9 @@ export default function Top() {
               {p1.withdrawals}x
             </p>
           </div>
-          <div className="w-18 sm:w-24 h-28 bg-[#161633] border-t-2 border-x border-[#5e5bf0]/40 rounded-t-xl flex flex-col items-center justify-start pt-3 shadow-[0_-5px_20px_rgba(94,91,240,0.15)] relative">
+          <div className="w-18 sm:w-24 h-28 bg-[#161633] border-t-2 border-x border-[#ff6b00]/40 rounded-t-xl flex flex-col items-center justify-start pt-3 shadow-[0_-5px_20px_rgba(255,107,0,0.15)] relative">
             <span className="font-display font-black text-amber-400 text-xl text-glow">#1</span>
-            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#5e5bf0] to-[#a855f7]" />
+            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#ff6b00] to-[#ff3d00]" />
           </div>
         </div>
 
@@ -213,7 +213,7 @@ export default function Top() {
             <motion.p 
               key={p3.amount}
               initial={{ scale: 1.1, color: '#ec4899' }}
-              animate={{ scale: 1, color: '#8a87ff' }}
+              animate={{ scale: 1, color: '#ffaa44' }}
               className="text-[10px] font-bold mt-0.5"
             >
               {formatCurrency(p3.amount)}
@@ -239,12 +239,12 @@ export default function Top() {
                 layout
                 key={user.name}
                 transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                className="bg-[#111126]/60 border border-[#1f1f3d] rounded-xl px-4 py-3.5 flex items-center justify-between text-xs transition hover:border-[#5e5bf0]/30 overflow-hidden"
+                className="bg-[#111126]/60 border border-[#1f1f3d] rounded-xl px-4 py-3.5 flex items-center justify-between text-xs transition hover:border-[#ff6b00]/30 overflow-hidden"
               >
                 <div className="flex items-center gap-3.5 min-w-0">
                   <span className="w-4 font-bold text-gray-400 text-center">{rankNum}</span>
 
-                  <div className="w-9 h-9 rounded-full bg-[#5e5bf0]/20 text-[#8a87ff] border border-[#5e5bf0]/30 flex items-center justify-center font-bold text-sm shrink-0 uppercase">
+                  <div className="w-9 h-9 rounded-full bg-[#ff6b00]/20 text-[#ffaa44] border border-[#ff6b00]/30 flex items-center justify-center font-bold text-sm shrink-0 uppercase">
                     {user.initial}
                   </div>
 
@@ -260,7 +260,7 @@ export default function Top() {
                 <div className="text-right shrink-0">
                   <motion.span 
                     key={user.amount}
-                    initial={{ scale: 1.15, color: '#8a87ff' }}
+                    initial={{ scale: 1.15, color: '#ffaa44' }}
                     animate={{ scale: 1, color: '#ffffff' }}
                     className="font-bold text-sm block"
                   >

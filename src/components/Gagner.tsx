@@ -197,7 +197,7 @@ export default function Gagner({ user, setUser, setActiveTab }: GagnerProps) {
               initial={{ width: 0 }}
               animate={{ width: `${isAllCompleted ? 100 : tierInfo.progress}%` }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="absolute left-0 top-0 h-full bg-gradient-to-r from-[#f59e0b] via-[#ef4444] to-[#7f7cf3] rounded-full"
+              className="absolute left-0 top-0 h-full bg-gradient-to-r from-[#f59e0b] via-[#ef4444] to-[#ff6b00] rounded-full"
               style={{ boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)' }}
             />
           </div>
@@ -250,7 +250,7 @@ export default function Gagner({ user, setUser, setActiveTab }: GagnerProps) {
                 isCompleted
                   ? 'bg-[#111126]/40 border-[#1f1f3d] opacity-50 cursor-default'
                   : isActive
-                  ? 'bg-gradient-to-tr from-[#5e5bf0] to-[#7f7cf3] border-[#7f7cf3] shadow-[0_0_20px_rgba(94,91,240,0.45)] hover:shadow-[0_0_25px_rgba(94,91,240,0.6)] cursor-pointer transform hover:-translate-y-1 active:translate-y-0 text-white'
+                  ? 'bg-gradient-to-tr from-[#ff6b00] to-[#ff3d00] border-[#ff3d00] shadow-[0_0_20px_rgba(255,107,0,0.45)] hover:shadow-[0_0_25px_rgba(255,107,0,0.6)] cursor-pointer transform hover:-translate-y-1 active:translate-y-0 text-white'
                   : 'bg-[#111126]/60 border-[#1f1f3d] text-gray-400/80 cursor-not-allowed opacity-90'
               }`}
             >
@@ -310,7 +310,7 @@ export default function Gagner({ user, setUser, setActiveTab }: GagnerProps) {
               {/* Ad Header */}
               <div className="px-5 py-4 border-b border-[#1f1f3d]/50 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#8a87ff]">PUBLICITÉ COMMANDITÉE</span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#ffaa44]">PUBLICITÉ COMMANDITÉE</span>
                   <h3 className="text-sm font-bold text-white mt-0.5">{currentMockAd.sponsor}</h3>
                 </div>
                 {adFinished && (
@@ -349,7 +349,7 @@ export default function Gagner({ user, setUser, setActiveTab }: GagnerProps) {
                   <p className="text-xs text-gray-400 font-light leading-relaxed">
                     Découvrez des opportunités financières incroyables avec nos partenaires mondiaux.
                   </p>
-                  <p className="text-[10px] text-[#5e5bf0] font-semibold mt-1">
+                  <p className="text-[10px] text-[#ff6b00] font-semibold mt-1">
                     Récompense pour ce niveau : +{activeAd.reward} F CFA
                   </p>
                 </div>
@@ -367,7 +367,7 @@ export default function Gagner({ user, setUser, setActiveTab }: GagnerProps) {
                   </button>
                 ) : (
                   <div className="w-full bg-[#1b1b36] border border-[#2c2c52] text-gray-400 py-3.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#5e5bf0] animate-ping" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#ff6b00] animate-ping" />
                     <span>Regardez la pub ({countdown}s restantes)...</span>
                   </div>
                 )}

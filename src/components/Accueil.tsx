@@ -143,7 +143,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
             initial={{ opacity: 0, y: -50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            className="fixed top-6 right-6 z-50 bg-[#1c1c3c] border border-[#5e5bf0]/40 px-5 py-3.5 rounded-xl shadow-[0_8px_30px_rgba(94,91,240,0.3)] flex items-center gap-3 max-w-sm"
+            className="fixed top-6 right-6 z-50 bg-[#1c1c3c] border border-[#ff6b00]/40 px-5 py-3.5 rounded-xl shadow-[0_8px_30px_rgba(255,107,0,0.3)] flex items-center gap-3 max-w-sm"
           >
             <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shrink-0">
               <CheckCircle size={18} />
@@ -155,7 +155,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
 
       {/* Main App Title Header (centered as in screenshot) */}
       <div className="text-center pt-2 pb-1 relative z-20">
-        <h1 className="text-xl font-display font-bold text-[#8a87ff] tracking-tight text-glow">Hot Money 🔥</h1>
+        <h1 className="text-xl font-display font-bold text-[#ffaa44] tracking-tight text-glow">Hot Money 🔥</h1>
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -190,7 +190,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
                     }}
                     className="w-full px-4 py-3.5 flex items-center gap-3.5 text-sm font-medium text-gray-200 hover:bg-[#1f1f3d]/60 hover:text-white transition-colors cursor-pointer"
                   >
-                    <FileText size={16} className="text-[#8a87ff]" />
+                    <FileText size={16} className="text-[#ffaa44]" />
                     <span>Conditions générales</span>
                   </button>
                   <div className="h-[1px] bg-[#1f1f3d]" />
@@ -201,7 +201,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
                     }}
                     className="w-full px-4 py-3.5 flex items-center gap-3.5 text-sm font-medium text-gray-200 hover:bg-[#1f1f3d]/60 hover:text-white transition-colors cursor-pointer"
                   >
-                    <SettingsIcon size={16} className="text-[#8a87ff]" />
+                    <SettingsIcon size={16} className="text-[#ffaa44]" />
                     <span>Paramètres</span>
                   </button>
                   <div className="h-[1px] bg-[#1f1f3d]" />
@@ -224,8 +224,8 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
 
       {/* Balance Total Card */}
       <div className="relative">
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#5e5bf0] to-[#7f7cf3] rounded-2xl blur-lg opacity-35" />
-        <div className="relative bg-gradient-to-r from-[#5e5bf0] to-[#7f7cf3] rounded-2xl p-6 text-center text-white shadow-[0_8px_30px_rgba(94,91,240,0.35)] flex flex-col items-center justify-center overflow-hidden">
+        <div className="absolute -inset-1 bg-gradient-to-r from-[#ff6b00] to-[#ff3d00] rounded-2xl blur-lg opacity-35" />
+        <div className="relative bg-gradient-to-r from-[#ff6b00] to-[#ff3d00] rounded-2xl p-6 text-center text-white shadow-[0_8px_30px_rgba(255,107,0,0.35)] flex flex-col items-center justify-center overflow-hidden">
           {/* Subtle light arc */}
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16" />
           
@@ -267,7 +267,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
           <div className="flex-1 space-y-3.5">
             <div>
               <h3 className="text-sm font-semibold text-white tracking-tight">Rejoindre la chaîne WhatsApp</h3>
-              <span className="inline-block text-[#8a87ff] bg-[#5e5bf0]/10 border border-[#5e5bf0]/20 text-2xs font-bold px-2 py-0.5 rounded-full mt-1">
+              <span className="inline-block text-[#ffaa44] bg-[#ff6b00]/10 border border-[#ff6b00]/20 text-2xs font-bold px-2 py-0.5 rounded-full mt-1">
                 +500 F CFA · une seule fois
               </span>
             </div>
@@ -302,7 +302,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
                   claimedWhatsApp
                     ? 'bg-gray-500/10 text-gray-500 border border-gray-500/10 cursor-not-allowed'
                     : joinedWhatsApp
-                    ? 'bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white shadow-lg shadow-[#5e5bf0]/20 cursor-pointer'
+                    ? 'bg-[#ff6b00] hover:bg-[#e05300] text-white shadow-lg shadow-[#ff6b00]/20 cursor-pointer'
                     : 'bg-[#1f1f3d] text-gray-400 cursor-not-allowed border border-[#2b2b52]'
                 }`}
               >
@@ -356,7 +356,7 @@ export default function Accueil({ user, setUser, setActiveTab, onShowConditions,
                     <p className="font-semibold text-white">
                       {withdrawal.name} <span className="font-light text-gray-400">a retiré</span>
                     </p>
-                    <p className="text-2xs text-[#8a87ff]/80 mt-0.5">
+                    <p className="text-2xs text-[#ffaa44]/80 mt-0.5">
                       via {withdrawal.method} • <span className="text-gray-400">{withdrawal.timeAgo}</span>
                     </p>
                   </div>

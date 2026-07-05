@@ -145,8 +145,8 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
     <div className="min-h-screen flex flex-col items-center justify-center bg-radial from-[#151532] via-[#090915] to-[#04040a] px-4 py-12 relative overflow-hidden">
       {/* Decorative ambient glowing background blobs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-purple/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#5e5bf0]/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#9c5bf0]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#ff6b00]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#ffaa44]/10 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Main Container */}
       <div className="w-full max-w-md z-10 flex flex-col items-center">
@@ -199,7 +199,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                   placeholder="Awa Diop"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#5e5bf0] focus:ring-1 focus:ring-[#5e5bf0] transition duration-200 shadow-inner"
+                  className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-1 focus:ring-[#ff6b00] transition duration-200 shadow-inner"
                 />
               </div>
             </div>
@@ -220,7 +220,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                 placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#5e5bf0] focus:ring-1 focus:ring-[#5e5bf0] transition duration-200 shadow-inner"
+                className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-1 focus:ring-[#ff6b00] transition duration-200 shadow-inner"
               />
             </div>
           </div>
@@ -240,12 +240,12 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                 placeholder="6 caractères minimum"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-11 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#5e5bf0] focus:ring-1 focus:ring-[#5e5bf0] transition duration-200 shadow-inner"
+                className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-11 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-1 focus:ring-[#ff6b00] transition duration-200 shadow-inner"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#515175] hover:text-[#8a87ff] transition"
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#515175] hover:text-[#ffaa44] transition"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -268,7 +268,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                   placeholder="Répétez le mot de passe"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#5e5bf0] focus:ring-1 focus:ring-[#5e5bf0] transition duration-200 shadow-inner"
+                  className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-1 focus:ring-[#ff6b00] transition duration-200 shadow-inner"
                 />
               </div>
             </div>
@@ -289,7 +289,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                   placeholder="C9672D2E"
                   value={referralCode}
                   onChange={(e) => setReferralCode(e.target.value)}
-                  className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#5e5bf0] focus:ring-1 focus:ring-[#5e5bf0] transition duration-200 shadow-inner"
+                  className="w-full bg-[#111126]/90 border border-[#1f1f3d] rounded-xl py-3 pl-11 pr-4 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-1 focus:ring-[#ff6b00] transition duration-200 shadow-inner"
                 />
               </div>
             </div>
@@ -299,8 +299,8 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
           {!isLogin && (
             <p className="text-[#6d6d93] text-2xs leading-relaxed mt-2 text-center md:text-left px-1">
               En cliquant sur « Créer un compte », vous acceptez nos{' '}
-              <a href="#" className="text-[#5e5bf0] hover:underline font-medium">Conditions</a> et notre{' '}
-              <a href="#" className="text-[#5e5bf0] hover:underline font-medium">Politique de confidentialité</a>.
+              <a href="#" className="text-[#ff6b00] hover:underline font-medium">Conditions</a> et notre{' '}
+              <a href="#" className="text-[#ff6b00] hover:underline font-medium">Politique de confidentialité</a>.
             </p>
           )}
 
@@ -308,7 +308,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full ${isLoading ? 'bg-[#5e5bf0]/60 cursor-not-allowed' : 'bg-[#5e5bf0] hover:bg-[#4d4ae0] cursor-pointer'} text-white font-medium text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 group transition-all duration-300 shadow-[0_4px_20px_rgba(94,91,240,0.35)] hover:shadow-[0_4px_25px_rgba(94,91,240,0.5)] transform hover:-translate-y-0.5 active:translate-y-0`}
+            className={`w-full ${isLoading ? 'bg-[#ff6b00]/60 cursor-not-allowed' : 'bg-[#ff6b00] hover:bg-[#e05300] cursor-pointer'} text-white font-medium text-sm py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 group transition-all duration-300 shadow-[0_4px_20px_rgba(255,107,0,0.35)] hover:shadow-[0_4px_25px_rgba(255,107,0,0.5)] transform hover:-translate-y-0.5 active:translate-y-0`}
           >
             <span>{isLoading ? 'Chargement...' : (isLogin ? 'Se connecter' : 'Créer un compte')}</span>
             {!isLoading && <ArrowRight size={16} className="group-hover:translate-x-1 transition duration-200" />}
@@ -324,7 +324,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                 setIsLogin(!isLogin);
                 setError('');
               }}
-              className="text-[#5e5bf0] hover:underline font-semibold ml-1.5 focus:outline-none cursor-pointer"
+              className="text-[#ff6b00] hover:underline font-semibold ml-1.5 focus:outline-none cursor-pointer"
             >
               {isLogin ? 'Créer un compte' : 'Connexion'}
             </button>

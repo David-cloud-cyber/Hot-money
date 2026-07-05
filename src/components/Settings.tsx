@@ -23,12 +23,12 @@ export default function Settings({ onBack }: SettingsProps) {
       {/* Theme Settings Card */}
       <div className="bg-[#111126]/80 border border-[#1f1f3d] rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden">
         {/* Glow effect */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#5e5bf0]/5 to-[#8a87ff]/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#ff6b00]/5 to-[#ffaa44]/5 rounded-full blur-2xl pointer-events-none" />
         
         <div className="space-y-4">
           <div>
             <h2 className="text-sm md:text-base font-semibold text-white font-display mb-1 flex items-center gap-2">
-              <Moon size={18} className="text-[#8a87ff]" />
+              <Moon size={18} className="text-[#ffaa44]" />
               Thème de l'application
             </h2>
             <p className="text-xs text-gray-400">
@@ -38,7 +38,7 @@ export default function Settings({ onBack }: SettingsProps) {
 
           <div className="p-4 bg-[#1c1c3c]/50 border border-[#1f1f3d]/80 rounded-xl space-y-2.5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-[#5e5bf0]/15 text-[#8a87ff] rounded-lg">
+              <div className="p-2 bg-[#ff6b00]/15 text-[#ffaa44] rounded-lg">
                 <Moon size={16} />
               </div>
               <div>
@@ -55,7 +55,7 @@ export default function Settings({ onBack }: SettingsProps) {
                 </p>
               </div>
               <div className="flex items-start gap-2.5">
-                <Sparkles size={14} className="text-[#8a87ff] mt-0.5 shrink-0" />
+                <Sparkles size={14} className="text-[#ffaa44] mt-0.5 shrink-0" />
                 <p className="text-[11px] text-gray-400">
                   <strong className="text-gray-300">Économie d'énergie :</strong> Consomme moins de batterie sur les écrans OLED et AMOLED.
                 </p>

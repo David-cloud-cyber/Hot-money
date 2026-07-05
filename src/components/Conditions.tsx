@@ -66,7 +66,7 @@ export default function Conditions({ onBack }: ConditionsProps) {
       {/* Main terms card */}
       <div className="bg-[#111126]/80 border border-[#1f1f3d] rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden">
         {/* Glow effect */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#5e5bf0]/5 to-[#8a87ff]/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#ff6b00]/5 to-[#ffaa44]/5 rounded-full blur-2xl pointer-events-none" />
         
         <div className="space-y-6 text-xs md:text-sm text-gray-300 leading-relaxed font-light">
           {sections.map((section, index) => (

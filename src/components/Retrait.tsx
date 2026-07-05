@@ -202,9 +202,9 @@ export default function Retrait({ user, setUser }: RetraitProps) {
             initial={{ opacity: 0, y: -50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            className="fixed top-6 right-6 z-50 bg-[#1c1c3c] border border-[#5e5bf0]/45 px-5 py-3.5 rounded-xl shadow-[0_8px_30px_rgba(94,91,240,0.3)] flex items-center gap-3 max-w-sm"
+            className="fixed top-6 right-6 z-50 bg-[#1c1c3c] border border-[#ff6b00]/45 px-5 py-3.5 rounded-xl shadow-[0_8px_30px_rgba(255,107,0,0.3)] flex items-center gap-3 max-w-sm"
           >
-            <div className="w-8 h-8 rounded-full bg-[#5e5bf0]/20 flex items-center justify-center text-[#8a87ff] shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#ff6b00]/20 flex items-center justify-center text-[#ffaa44] shrink-0">
               <CheckCircle size={18} />
             </div>
             <p className="text-sm font-semibold text-white">{toastMessage}</p>
@@ -234,7 +234,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
         /* Transaction History Module */
         <div className="bg-[#111126] border border-[#1f1f3d] rounded-2xl p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <History className="text-[#8a87ff]" size={18} />
+            <History className="text-[#ffaa44]" size={18} />
             <h2 className="text-sm font-bold text-white tracking-tight">Historique des transactions</h2>
           </div>
 
@@ -283,7 +283,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
           {!withdrawalSuccess ? (
             <form onSubmit={handleWithdrawSubmit} className="space-y-5">
               <div className="pb-2 border-b border-[#1f1f3d]/50">
-                <span className="text-[10px] uppercase font-bold text-[#8a87ff] tracking-widest block">FORMULAIRE DE RETRAIT</span>
+                <span className="text-[10px] uppercase font-bold text-[#ffaa44] tracking-widest block">FORMULAIRE DE RETRAIT</span>
                 <div className="flex items-center gap-2.5 mt-1">
                   <img
                     src={`https://flagcdn.com/w40/${selectedCountry.code.toLowerCase()}.png`}
@@ -314,7 +314,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
                       onClick={() => setWithdrawMethod(op)}
                       className={`py-3 px-4 rounded-xl text-xs font-bold text-center border cursor-pointer transition ${
                         withdrawMethod === op
-                          ? 'bg-[#5e5bf0] border-[#7f7cf3] text-white shadow-lg shadow-[#5e5bf0]/15'
+                          ? 'bg-[#ff6b00] border-[#ff3d00] text-white shadow-lg shadow-[#ff6b00]/15'
                           : 'bg-[#090915] border-[#1f1f3d] text-gray-400 hover:text-white hover:bg-[#111126]'
                       }`}
                     >
@@ -339,7 +339,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
                     placeholder="Ex: 0588992211"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-[#090915] border border-[#1f1f3d] rounded-xl py-3 pl-14 pr-4 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#5e5bf0] focus:ring-1 focus:ring-[#5e5bf0] transition duration-200"
+                    className="w-full bg-[#090915] border border-[#1f1f3d] rounded-xl py-3 pl-14 pr-4 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-1 focus:ring-[#ff6b00] transition duration-200"
                   />
                 </div>
               </div>
@@ -356,7 +356,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
                   max={user.balance}
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full bg-[#090915] border border-[#1f1f3d] rounded-xl py-3 px-4 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#5e5bf0] focus:ring-1 focus:ring-[#5e5bf0] transition duration-200"
+                  className="w-full bg-[#090915] border border-[#1f1f3d] rounded-xl py-3 px-4 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#ff6b00] focus:ring-1 focus:ring-[#ff6b00] transition duration-200"
                 />
                 <span className="text-[10px] text-gray-400 block px-1">
                   Solde disponible maximum : {formatCurrency(user.balance)} F CFA
@@ -366,7 +366,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white py-3.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#5e5bf0]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                className="w-full bg-[#ff6b00] hover:bg-[#e05300] text-white py-3.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#ff6b00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
               >
                 <Send size={14} />
                 <span>Confirmer la demande de retrait ({formatCurrency(parseInt(amount || '0', 10))} F CFA)</span>
@@ -383,7 +383,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
                 <p className="text-xs text-gray-400 font-light leading-relaxed">
                   Votre demande de retrait de <span className="text-white font-semibold">{formatCurrency(parseInt(amount || '0', 10))} F CFA</span> via {withdrawMethod} est actuellement en cours de traitement.
                 </p>
-                <p className="text-2xs text-[#8a87ff] font-medium pt-1">
+                <p className="text-2xs text-[#ffaa44] font-medium pt-1">
                   Le traitement prend généralement entre 5 et 30 minutes.
                 </p>
               </div>
@@ -401,8 +401,8 @@ export default function Retrait({ user, setUser }: RetraitProps) {
         <>
           {/* Solde Disponible Card */}
           <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#5e5bf0] to-[#7f7cf3] rounded-2xl blur-lg opacity-35" />
-            <div className="relative bg-gradient-to-r from-[#5e5bf0] to-[#7f7cf3] rounded-2xl p-6 text-center text-white shadow-[0_8px_30px_rgba(94,91,240,0.35)] flex flex-col items-center justify-center overflow-hidden">
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#ff6b00] to-[#ff3d00] rounded-2xl blur-lg opacity-35" />
+            <div className="relative bg-gradient-to-r from-[#ff6b00] to-[#ff3d00] rounded-2xl p-6 text-center text-white shadow-[0_8px_30px_rgba(255,107,0,0.35)] flex flex-col items-center justify-center overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
 
               <div className="flex items-center gap-2 text-white/80 text-xs font-semibold tracking-widest uppercase">
@@ -422,9 +422,9 @@ export default function Retrait({ user, setUser }: RetraitProps) {
 
           {/* Alert minimum notice */}
           <div className="bg-[#111126]/60 border border-[#1f1f3d] rounded-2xl p-4 flex items-start gap-3">
-            <AlertCircle size={18} className="text-[#8a87ff] shrink-0 mt-0.5" />
+            <AlertCircle size={18} className="text-[#ffaa44] shrink-0 mt-0.5" />
             <div className="text-2xs leading-relaxed font-light text-gray-300">
-              <p className="font-semibold text-[#8a87ff]">Le montant minimum de retrait est de 10 000 F CFA.</p>
+              <p className="font-semibold text-[#ffaa44]">Le montant minimum de retrait est de 10 000 F CFA.</p>
               <p className="text-gray-400 mt-1">Pour les pays d'Afrique centrale, les paiements sont traités en Franc CFA BEAC (XAF).</p>
             </div>
           </div>
@@ -438,7 +438,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
                 <div
                   key={country.code}
                   onClick={() => handleCountrySelect(country)}
-                  className={`bg-[#111126]/60 border border-[#1f1f3d] hover:border-[#5e5bf0]/40 rounded-xl px-4 py-3.5 flex items-center justify-between text-xs transition-all duration-300 cursor-pointer transform hover:-translate-y-0.5 ${
+                  className={`bg-[#111126]/60 border border-[#1f1f3d] hover:border-[#ff6b00]/40 rounded-xl px-4 py-3.5 flex items-center justify-between text-xs transition-all duration-300 cursor-pointer transform hover:-translate-y-0.5 ${
                     user.balance < 10000 ? 'hover:bg-red-500/5' : 'hover:bg-[#1a1a38]/40'
                   }`}
                 >
@@ -451,7 +451,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
                         className="w-5.5 h-4 object-cover rounded shadow-sm shrink-0 border border-white/10"
                         referrerPolicy="no-referrer"
                       />
-                      <span className="font-display font-black text-xs text-[#8a87ff] uppercase tracking-wide">
+                      <span className="font-display font-black text-xs text-[#ffaa44] uppercase tracking-wide">
                         {country.code}
                       </span>
                     </div>
@@ -502,7 +502,7 @@ export default function Retrait({ user, setUser }: RetraitProps) {
                   >
                     <div className="flex items-center justify-between text-2xs">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-[#5e5bf0]/15 text-[#8a87ff] font-bold text-xs flex items-center justify-center border border-[#5e5bf0]/25 uppercase">
+                        <div className="w-8 h-8 rounded-full bg-[#ff6b00]/15 text-[#ffaa44] font-bold text-xs flex items-center justify-center border border-[#ff6b00]/25 uppercase">
                           {rev.initial}
                         </div>
                         <div>

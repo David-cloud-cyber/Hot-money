@@ -77,9 +77,9 @@ export default function Inviter({ user, setUser }: InviterProps) {
             initial={{ opacity: 0, y: -50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            className="fixed top-6 right-6 z-50 bg-[#1c1c3c] border border-[#5e5bf0]/45 px-5 py-3.5 rounded-xl shadow-[0_8px_30px_rgba(94,91,240,0.3)] flex items-center gap-3 max-w-sm"
+            className="fixed top-6 right-6 z-50 bg-[#1c1c3c] border border-[#ff6b00]/45 px-5 py-3.5 rounded-xl shadow-[0_8px_30px_rgba(255,107,0,0.3)] flex items-center gap-3 max-w-sm"
           >
-            <div className="w-8 h-8 rounded-full bg-[#5e5bf0]/20 flex items-center justify-center text-[#8a87ff] shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#ff6b00]/20 flex items-center justify-center text-[#ffaa44] shrink-0">
               <Sparkles size={18} />
             </div>
             <p className="text-sm font-semibold text-white">{showNotification}</p>
@@ -104,8 +104,8 @@ export default function Inviter({ user, setUser }: InviterProps) {
 
       {/* Reward Card Banner (identical to Home screen style but focused on parrainage) */}
       <div className="relative">
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#5e5bf0] to-[#7f7cf3] rounded-2xl blur-lg opacity-30" />
-        <div className="relative bg-gradient-to-r from-[#5e5bf0] to-[#7f7cf3] rounded-2xl p-6 shadow-xl flex items-center gap-4 text-white overflow-hidden">
+        <div className="absolute -inset-1 bg-gradient-to-r from-[#ff6b00] to-[#ff3d00] rounded-2xl blur-lg opacity-30" />
+        <div className="relative bg-gradient-to-r from-[#ff6b00] to-[#ff3d00] rounded-2xl p-6 shadow-xl flex items-center gap-4 text-white overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
           <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-white shrink-0">
             <Gift size={22} className="text-white animate-pulse" />
@@ -124,7 +124,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
           <label className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">
             LIEN D'INVITATION
           </label>
-          <div className="flex items-center bg-[#090915] border border-[#1f1f3d] rounded-xl overflow-hidden pr-1.5 py-1.5 pl-3.5 transition focus-within:border-[#5e5bf0]">
+          <div className="flex items-center bg-[#090915] border border-[#1f1f3d] rounded-xl overflow-hidden pr-1.5 py-1.5 pl-3.5 transition focus-within:border-[#ff6b00]">
             <input
               type="text"
               readOnly
@@ -197,19 +197,19 @@ export default function Inviter({ user, setUser }: InviterProps) {
           {/* Copier (Full size block) */}
           <button
             onClick={handleCopy}
-            className="bg-[#111126] border border-[#1f1f3d] hover:border-[#8a87ff]/40 hover:bg-[#191938] text-gray-200 py-3.5 px-3.5 rounded-xl text-xs font-semibold flex items-center justify-between gap-1.5 transition cursor-pointer group"
+            className="bg-[#111126] border border-[#1f1f3d] hover:border-[#ffaa44]/40 hover:bg-[#191938] text-gray-200 py-3.5 px-3.5 rounded-xl text-xs font-semibold flex items-center justify-between gap-1.5 transition cursor-pointer group"
           >
             <div className="flex items-center gap-2">
-              <Copy size={16} className="text-[#8a87ff]" />
+              <Copy size={16} className="text-[#ffaa44]" />
               <span>Copier</span>
             </div>
-            <ChevronRight size={13} className="text-gray-500 group-hover:text-[#8a87ff] group-hover:translate-x-0.5 transition-all" />
+            <ChevronRight size={13} className="text-gray-500 group-hover:text-[#ffaa44] group-hover:translate-x-0.5 transition-all" />
           </button>
 
           {/* Partager */}
           <button
             onClick={() => handleShare('native')}
-            className="bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white py-3.5 px-3.5 rounded-xl text-xs font-bold flex items-center justify-between gap-1.5 transition cursor-pointer shadow-lg shadow-[#5e5bf0]/15 group"
+            className="bg-[#ff6b00] hover:bg-[#e05300] text-white py-3.5 px-3.5 rounded-xl text-xs font-bold flex items-center justify-between gap-1.5 transition cursor-pointer shadow-lg shadow-[#ff6b00]/15 group"
           >
             <div className="flex items-center gap-2">
               <Share2 size={16} className="group-hover:rotate-12 transition-transform" />
@@ -223,7 +223,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
       {/* Visual Promo Banner Section */}
       <div className="bg-[#111126] border border-[#1f1f3d] rounded-2xl p-5 md:p-6 space-y-4">
         <div className="flex items-center gap-2">
-          <ImageIcon size={18} className="text-[#8a87ff]" />
+          <ImageIcon size={18} className="text-[#ffaa44]" />
           <h2 className="text-sm md:text-base font-semibold text-white font-display">
             Affiche promotionnelle de partage
           </h2>
@@ -242,7 +242,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
             <a 
               href={referralBanner}
               download="hotmoney_promo_banner.jpg"
-              className="bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white p-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-lg cursor-pointer"
+              className="bg-[#ff6b00] hover:bg-[#e05300] text-white p-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-lg cursor-pointer"
             >
               <Download size={14} />
               <span>Télécharger</span>
@@ -255,7 +255,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
             download="hotmoney_promo_banner.jpg"
             className="bg-[#1f1f3d] hover:bg-[#2c2c52] text-gray-200 border border-[#2c2c52] px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer w-full sm:w-auto"
           >
-            <Download size={15} className="text-[#8a87ff]" />
+            <Download size={15} className="text-[#ffaa44]" />
             <span>Télécharger l'affiche promotionnelle</span>
           </a>
         </div>
@@ -271,7 +271,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
         <div className="flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-[#1f1f3d]/60 border border-[#2c2c52] flex items-center justify-center text-gray-400 shrink-0">
             {/* Custom overlapping users icon as in screenshot */}
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5 text-[#8a87ff]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5 text-[#ffaa44]">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
               <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -286,7 +286,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
 
         <div className="text-right z-10">
           <p className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Gagné</p>
-          <p className="text-base font-extrabold text-[#8a87ff] mt-1.5 font-display">{formatCurrency(user.earningsFromInvites)} F CFA</p>
+          <p className="text-base font-extrabold text-[#ffaa44] mt-1.5 font-display">{formatCurrency(user.earningsFromInvites)} F CFA</p>
         </div>
       </div>
 
@@ -313,7 +313,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
                 className="flex items-center justify-between p-3.5 bg-[#1c1c3c]/50 border border-[#1f1f3d]/70 rounded-xl hover:border-[#1f1f3d] transition-all"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#5e5bf0]/10 border border-[#5e5bf0]/20 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                  <div className="w-9 h-9 rounded-full bg-[#ff6b00]/10 border border-[#ff6b00]/20 flex items-center justify-center text-white font-bold text-sm shrink-0">
                     {friend.name.charAt(0)}
                   </div>
                   <div className="min-w-0">

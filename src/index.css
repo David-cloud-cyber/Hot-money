@@ -6,8 +6,8 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   
-  --color-brand-purple: #5e5bf0;
-  --color-brand-glow: rgba(94, 91, 240, 0.45);
+  --color-brand-purple: #ff6b00;
+  --color-brand-glow: rgba(255, 107, 0, 0.45);
   --color-dark-bg: #090915;
   --color-card-bg: #111126;
   --color-border-subtle: #1f1f3d;
@@ -36,7 +36,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5e5bf0;
+  background: #ff6b00;
 }
 
 /* Custom glowing effects */
@@ -85,7 +85,7 @@ body {
 .light .border-[#1f1f3d]\/30,
 .light .border-[#1f1f3d]\/50,
 .light .border-[#1f1f3d]\/60,
-.light .border-[#5e5bf0]\/40,
+.light .border-[#ff6b00]\/40,
 .light .border-indigo-500\/30 {
   border-color: #e2e8f0 !important;
 }
@@ -121,12 +121,12 @@ body {
 }
 
 /* Brand Special Colors */
-.light .text-[#8a87ff] {
-  color: #5e5bf0 !important;
+.light .text-[#ffaa44] {
+  color: #ff6b00 !important;
 }
 
 .light .text-glow {
-  text-shadow: 0 0 10px rgba(94, 91, 240, 0.2) !important;
+  text-shadow: 0 0 10px rgba(255, 107, 0, 0.2) !important;
 }
 
 .light .from-[#151532] {
@@ -146,8 +146,8 @@ body {
   background-color: rgba(34, 197, 94, 0.1) !important;
 }
 
-.light .bg-[#5e5bf0]\/20 {
-  background-color: rgba(94, 91, 240, 0.1) !important;
+.light .bg-[#ff6b00]\/20 {
+  background-color: rgba(255, 107, 0, 0.1) !important;
 }
 
 .light .hover\:bg-[#1c1c3c]\/50:hover {

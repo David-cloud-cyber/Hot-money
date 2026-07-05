@@ -3,7 +3,7 @@ import { User, InvitedFriend } from '../types';
 import { Gift, Copy, Share2, Check, MessageCircle, Send, Facebook, Sparkles, ChevronRight, Download, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 // @ts-ignore
-import referralBanner from '../assets/images/referral_banner_1783212119466.jpg';
+import referralBanner from '../assets/images/hotmoney_referral_banner_1783212291117.jpg';
 
 interface InviterProps {
   user: User;
@@ -234,14 +234,14 @@ export default function Inviter({ user, setUser }: InviterProps) {
         <div className="relative rounded-xl overflow-hidden border border-[#1f1f3d] group">
           <img 
             src={referralBanner} 
-            alt="SkillMoney Promo Banner" 
+            alt="Hot Money Promo Banner" 
             className="w-full aspect-video object-cover group-hover:scale-[1.01] transition-transform duration-500"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-end p-4">
             <a 
               href={referralBanner}
-              download="skillmoney_promo_banner.jpg"
+              download="hotmoney_promo_banner.jpg"
               className="bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white p-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-lg cursor-pointer"
             >
               <Download size={14} />
@@ -252,7 +252,7 @@ export default function Inviter({ user, setUser }: InviterProps) {
         <div className="flex justify-center">
           <a 
             href={referralBanner}
-            download="skillmoney_promo_banner.jpg"
+            download="hotmoney_promo_banner.jpg"
             className="bg-[#1f1f3d] hover:bg-[#2c2c52] text-gray-200 border border-[#2c2c52] px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer w-full sm:w-auto"
           >
             <Download size={15} className="text-[#8a87ff]" />

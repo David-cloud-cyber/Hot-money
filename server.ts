@@ -239,8 +239,29 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, { index: false }));
     app.get('*', (req, res) => {
+      try {
+        const indexPath = path.join(distPath, 'index.html');
+        if (fs.existsSync(indexPath)) {
+          let html = fs.readFileSync(indexPath, 'utf-8');
+          
+          const host = req.get('host') || 'www.hotmoney.fun';
+          const protocol = req.headers['x-forwarded-proto'] === 'https' || req.secure ? 'https' : 'http';
+          const absoluteUrl = `${protocol}://${host}${req.originalUrl}`;
+          const absoluteImageUrl = `${protocol}://${host}/og_image_share.jpg`;
+          
+          // Inject dynamic OG tags with absolute paths
+          html = html.replace(/property="og:url"\s+content="[^"]*"/g, `property="og:url" content="${absoluteUrl}"`);
+          html = html.replace(/property="og:image"\s+content="[^"]*"/g, `property="og:image" content="${absoluteImageUrl}"`);
+          html = html.replace(/name="twitter:image"\s+content="[^"]*"/g, `name="twitter:image" content="${absoluteImageUrl}"`);
+          
+          res.setHeader('Content-Type', 'text/html');
+          return res.send(html);
+        }
+      } catch (err) {
+        console.error("Error generating dynamic Open Graph tags:", err);
+      }
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }

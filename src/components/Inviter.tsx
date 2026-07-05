@@ -1,7 +1,9 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { User, InvitedFriend } from '../types';
-import { Gift, Copy, Share2, Check, MessageCircle, Send, Facebook, Sparkles, ChevronRight } from 'lucide-react';
+import { Gift, Copy, Share2, Check, MessageCircle, Send, Facebook, Sparkles, ChevronRight, Download, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+// @ts-ignore
+import referralBanner from '../assets/images/referral_banner_1783212119466.jpg';
 
 interface InviterProps {
   user: User;
@@ -215,6 +217,47 @@ export default function Inviter({ user, setUser }: InviterProps) {
             </div>
             <ChevronRight size={13} className="text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
           </button>
+        </div>
+      </div>
+
+      {/* Visual Promo Banner Section */}
+      <div className="bg-[#111126] border border-[#1f1f3d] rounded-2xl p-5 md:p-6 space-y-4">
+        <div className="flex items-center gap-2">
+          <ImageIcon size={18} className="text-[#8a87ff]" />
+          <h2 className="text-sm md:text-base font-semibold text-white font-display">
+            Affiche promotionnelle de partage (Anglais)
+          </h2>
+        </div>
+        <p className="text-xs text-gray-400 font-light">
+          Utilisez ce visuel attrayant et engageant pour inciter vos contacts à s'inscrire et maximiser vos parrainages.
+        </p>
+        <div className="relative rounded-xl overflow-hidden border border-[#1f1f3d] group">
+          <img 
+            src={referralBanner} 
+            alt="SkillMoney Promo Banner" 
+            className="w-full aspect-video object-cover group-hover:scale-[1.01] transition-transform duration-500"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-end p-4">
+            <a 
+              href={referralBanner}
+              download="skillmoney_promo_banner.jpg"
+              className="bg-[#5e5bf0] hover:bg-[#4d4ae0] text-white p-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-lg cursor-pointer"
+            >
+              <Download size={14} />
+              <span>Télécharger</span>
+            </a>
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <a 
+            href={referralBanner}
+            download="skillmoney_promo_banner.jpg"
+            className="bg-[#1f1f3d] hover:bg-[#2c2c52] text-gray-200 border border-[#2c2c52] px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer w-full sm:w-auto"
+          >
+            <Download size={15} className="text-[#8a87ff]" />
+            <span>Télécharger l'affiche promotionnelle</span>
+          </a>
         </div>
       </div>
 
